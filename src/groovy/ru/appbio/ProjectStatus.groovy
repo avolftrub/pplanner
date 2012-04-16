@@ -34,7 +34,7 @@ public enum ProjectStatus {
      * Get enum value by its id
      */
     static ProjectStatus getById(int theId) {
-        for (value in NoteType.values()) {
+        for (value in ProjectStatus.values()) {
             if (value.id == theId) {
                 return value;
             }

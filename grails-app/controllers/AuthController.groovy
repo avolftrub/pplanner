@@ -5,7 +5,8 @@ import org.apache.shiro.web.util.SavedRequest
 import org.apache.shiro.web.util.WebUtils
 
 class AuthController {
-    def shiroSecurityManager
+
+    def userService
 
     def index = { redirect(action: "login", params: params) }
 
@@ -37,6 +38,15 @@ class AuthController {
             // will be thrown if the username is unrecognised or the
             // password is incorrect.
             SecurityUtils.subject.login(authToken)
+
+            def user = userService.getUserWithCommonLogin(session)
+
+            //Redirect to a page depending on user role
+            if (targetUri == "/" && user.role == ShiroRole.findByName(ShiroRole.ROLE_ADMIN)) {
+                targetUri = "/user/list"
+            } else if (targetUri == "/" && user.role == ShiroRole.findByName(ShiroRole.ROLE_DEALER)) {
+                targetUri = "/project/list"
+            }
 
             log.info "Redirecting to '${targetUri}'."
             redirect(uri: targetUri)

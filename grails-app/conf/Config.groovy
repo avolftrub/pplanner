@@ -59,6 +59,9 @@ grails.exceptionresolver.params.exclude = ['password']
 // enable query caching by default
 grails.hibernate.cache.queries = true
 
+//enable remember me login option
+security.shiro.authc.required = false
+
 // set per-environment serverURL stem for creating absolute links
 environments {
     development {

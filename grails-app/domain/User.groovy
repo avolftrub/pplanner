@@ -1,6 +1,6 @@
 class User {
     String username
-    String passwordHash
+    String password
     String firstName
     String lastName
     ShiroRole role

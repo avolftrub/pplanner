@@ -47,9 +47,32 @@ body {
 	        box-shadow: 0 0 0.3em #255b17;
 }
 
-#grailsLogo {
-	background-color: #abbf78;
+div.appHeader {
+	/*background-color: #abbf78;*/
+    background: url("../images/bg-header.png") repeat-x;
+    display: block;
+    height: 95px;
 }
+
+div.appHeader div.userSection {
+    display: inline;
+}
+
+div.appHeader div.userSection span {
+    padding-left: 30px;
+    position: relative;
+    top: -5px;
+}
+
+
+div.appHeader div.logout {
+    float: right;
+}
+div.appHeader div.logout a {
+    margin-top: 55px;
+    margin-right: 25px;
+}
+
 
 /* replace with .no-boxshadow body if you have modernizr available */
 .ie6 body,
@@ -89,7 +112,7 @@ img {
 
 /* GENERAL */
 
-#grailsLogo a {
+div.appHeader a {
 	display: inline-block;
 	margin: 1em;
 }
@@ -589,3 +612,5 @@ a.skip {
 	position: absolute;
 	left: -9999px;
 }
+
+

@@ -10,9 +10,9 @@ class BootStrap {
 
             development {
                 new User(username: "artem.volftrub@gmail.com", password: new Sha512Hash('password').toHex(),
-                        role: ShiroRole.findByRole('admin'), firstName: "Артем", lastName: "Вольфтруб").save(flush: true, failOnError: true)
+                        role: ShiroRole.findByName(ShiroRole.ROLE_ADMIN), firstName: "Артем", lastName: "Вольфтруб").save(flush: true, failOnError: true)
                 new User(username: "avolftrub-test-kkk@gramant.ru", password: new Sha512Hash('password').toHex(),
-                        role: ShiroRole.findByName('dealer'), firstName: "Ксения",
+                        role: ShiroRole.findByName(ShiroRole.ROLE_DEALER), firstName: "Ксения",
                         lastName: "Продажная").save(flush: true, failOnError: true)
 
                 def dealer1 = new Dealer(name: "ООО Агентство Химэксперт", code: "XX9812R").save(failOnError: true)
@@ -24,8 +24,8 @@ class BootStrap {
 
     def bootstrapShiroRoles() {
         def roles = [
-                admin:['users','projects','dealers'],
-                dealer:['projects']
+                'admin' :['user','project','dealer'],
+                'dealer' :['project']
         ]
 
         roles.each { roleName, perms ->

@@ -25,7 +25,7 @@ class Project {
         contactPerson(blank: false, size:  1..512)
         contactPhone(blank: false, size:  1..128)
         name(blank: false, size:  1..1024)
-        sum(min: 0)
+        sum(min: new BigDecimal(0))
         comments(nullable: true, size: 1..1024)
         city(nullable: true)
         releaseDate(nullable: true)
