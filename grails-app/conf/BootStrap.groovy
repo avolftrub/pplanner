@@ -1,5 +1,7 @@
 import grails.util.Environment
 import org.apache.shiro.crypto.hash.Sha512Hash
+import org.joda.time.LocalDate
+import ru.appbio.ProjectStatus
 
 class BootStrap {
 
@@ -18,6 +20,23 @@ class BootStrap {
                 def dealer1 = new Dealer(name: "ООО Агентство Химэксперт", code: "XX9812R").save(failOnError: true)
                 def dealer2 = new Dealer(name: "\"TOO \"ZALMA Ltd.\" (ЦАЛМА Лтд)", code: "BB02S18").save(failOnError: true)
 
+
+                for(int i=0; i<40; i++) {
+                    log.info "FFFF: it=$i"
+                    new Project(
+                            createDate: new LocalDate(),
+                            customer: "Клиент № $i",
+                            department: "Административно-хозяйственный отдел № $i",
+                            contactPerson: "Закулачный Степан Юрьевич $it",
+                            contactPhone: "+8 800 2 000 $i",
+                            name: "Поставка масс спектрометра для детского сада № $i",
+                            releaseDate: new LocalDate().plusMonths(i),
+                            sum: new BigDecimal(Math.round(Math.random() * 300000)),
+                            status: ProjectStatus.SPECIFICATION_AGREED,
+                            comments: "Какой чудестный день",
+                            dealer: dealer1
+                    ).save(failOnError: true)
+                }
             }
         }
     }
