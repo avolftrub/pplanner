@@ -98,7 +98,7 @@ a:hover, a:active {
 h1 {
 	color: #003366;
 	font-weight: normal;
-	font-size: 1.25em;
+	font-size: 22px;
 	margin: 0.8em 0 0.3em 0;
 }
 
@@ -135,7 +135,7 @@ div.appHeader a {
 	/*background: #abbf78;*/
 	color: #000;
 	clear: both;
-	font-size: 0.8em;
+	font-size: 11px;
 	margin-top: 1.5em;
 	padding: 1em;
 	min-height: 1em;
@@ -166,6 +166,7 @@ div.appHeader a {
 	-webkit-box-shadow: 0 0 3px 1px #aaaaaa;
 	        box-shadow: 0 0 3px 1px #aaaaaa;
 	zoom: 1;
+    font-size: 15px;
 }
 
 .nav ul {
@@ -274,8 +275,12 @@ label {
 input, select, textarea {
 	background-color: #fcfcfc;
 	border: 1px solid #cccccc;
-	font-size: 1em;
+	font-size: 13px;
 	padding: 0.2em 0.4em;
+}
+
+body {
+    font-size: 13px;
 }
 
 select {
@@ -354,7 +359,7 @@ fieldset.embedded legend {
 
 .errors,
 .message {
-	font-size: 0.8em;
+	font-size: 11px;
 	line-height: 2;
 	margin: 1em 2em;
 	padding: 0.25em;
@@ -652,8 +657,24 @@ a:hover {
     color: #E16F00;
 }
 
-table.entityShow {
-    width: 900px;
+table.entityShow, table.entityEdit {
+    width: 920px;
+    margin: 20px 20px 40px 20px;
 }
+
+table.entityShow tr td {
+    border: 1px solid #A3A3A3;
+}
+
+table.entityEdit {
+    border: none;
+}
+
+span.projectStatus {
+    color: #666666;
+    font-size: 18px;
+}
+
+
 
 
