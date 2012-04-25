@@ -1,23 +1,56 @@
+<%@ page import="ru.appbio.ProjectStatus" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main2">
     <title><g:message code="project.action.show.title"/></title>
+    <script src="${resource(dir: "js", file: "projects.js")}" type="text/javascript"></script>
 </head>
 <body>
 <div>
-    <p> Between
 </div>
 <div class="content">
-    <h1>${project.name},&nbsp;<span class="projectStatus"><g:message code="${'project.status.'+project.status}"/></span></h1>
+    <g:if test="${isNew}">
+        <h1 class="newEntity"><g:message code="project.action.new.title"/></h1>
+    </g:if>
+    <g:else>
+        <h1 class="newEntity">
+            <span class="createDate">${message(code: 'project.date.of.creation', args: [formatPlainDate(value: project.createDate)])}</span>
+            <g:message code="project.action.edit.title"/>
+        </h1>
+    </g:else>
 
     <table class="entityEdit">
         <colgroup>
-            <col width="150">
-            <col width="150">
+            <col width="30%">
+            <col width="70%">
         </colgroup>
         <tr>
-            <td><g:message code="project.createDate"/></td>
+            <td><g:message code="project.name"/></td>
+            <td>
+                <g:textField name="name" value="${project.name}" class="${hasErrors(bean: project, field: 'name', 'errors')}"/>&nbsp;*
+                <g:renderFieldErrors bean="${project}" field="name"/>
+            </td>
+        </tr>
+        <tr>
+            <td><g:message code="project.dealer"/></td>
+            <td>
+                <g:if test="${isNew}">
+                    <g:if test="${user?.isAdmin()}">
+                        <g:select name="dealer" class="w45" value="${project.dealer?.name}" optionKey="id" from="${Dealer.list()}"/>
+                    </g:if>
+                    <g:else>
+                        ${user?.dealer?.name}
+                    </g:else>
+                </g:if>
+                <g:else>
+                    <span class="entityValue">${project.dealer?.name}</span>
+                </g:else>
+            </td>
+        </tr>
+
+        <tr>
+            <td><g:message code="project.customer"/></td>
             <td>
                 <g:textField name="customer" value="${project.customer}" class="${hasErrors(bean: project, field: 'customer', 'errors')}"/>&nbsp;*
                 <g:renderFieldErrors bean="${project}" field="customer"/>
@@ -54,10 +87,17 @@
         </tr>
 
         <tr>
+            <td><g:message code="project.current.status"/></td>
+            <td>
+                <g:select name="status" class="w45" value="${project.status}" optionKey="id" from="${ProjectStatus.values()}"/>
+                <g:renderFieldErrors bean="${project}" field="status"/>
+            </td>
+        </tr>
+
+        <tr>
             <td><g:message code="project.releaseDate"/></td>
             <td>
-                <input type="text" id="releaseDate" name="releaseDate" value="${project.releaseDate}"
-                       class="${hasErrors(bean: project, field: 'contactPhone', 'errors')}"/>
+                <input class="calendarInput ${hasErrors(bean: project, field: 'releaseDate', 'errors')}" type="text" id="releaseDate" name="releaseDate" value="${formatPlainDate(value: project.releaseDate)}"/>
                 <g:renderFieldErrors bean="${project}" field="releaseDate"/>
             </td>
         </tr>

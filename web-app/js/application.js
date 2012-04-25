@@ -6,4 +6,11 @@ if (typeof jQuery !== 'undefined') {
 			$(this).fadeOut();
 		});
 	})(jQuery);
+
+    $('input.errors').focus(function() {
+        $(this).removeClass('errors');
+        $(this).nextAll('.InputErrors').first().hide();
+        return true;
+    });
+
 }

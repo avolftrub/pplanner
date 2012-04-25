@@ -3,7 +3,7 @@ import ru.appbio.ProjectStatus
 
 class Project {
 
-    LocalDate createDate
+    LocalDate createDate = new LocalDate()
     String customer
     String department
     String city
@@ -12,7 +12,7 @@ class Project {
     String name
     LocalDate releaseDate
     BigDecimal sum
-    ProjectStatus status
+    ProjectStatus status = ProjectStatus.INTEREST_CONFIRMED
     String comments
     LocalDate closeDate
 
@@ -28,7 +28,13 @@ class Project {
         sum(min: new BigDecimal(0))
         comments(nullable: true, size: 1..1024)
         city(nullable: true)
-        releaseDate(nullable: true)
+        releaseDate(nullable: true, validator: { val, obj ->
+            if (val) {
+                if (new LocalDate().toDateTimeAtStartOfDay().compareTo(val.toDateTimeAtStartOfDay()) >= 0) {
+                    ['releaseDate.before.currentdate']
+                }
+            }
+        })
         closeDate(nullable: true)
     }
 }

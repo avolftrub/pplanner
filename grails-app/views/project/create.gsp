@@ -8,19 +8,7 @@
 
 <body>
 
-<div class="actionMenu">
-    <ul>
-        <li>
-            <g:link controller="project" class="delete deleteProjectLink" action="delete" id="${project.id}" helpertext="${message(code: 'project.delete.confirm')}">
-                <img class="actionIcon" src="${resource(dir: 'images', file: 'delete.png')}" alt="${message(code: 'project.action.delete')}"/><g:message code="project.action.delete"/>
-            </g:link>
-        </li>
-    </ul>
-
-</div>
-
-<g:form method="post" controller="project" action="update" name="projectForm">
-    <g:hiddenField name="id" value="${project.id}"/>
+<g:form method="post" controller="project" action="save" name="projectForm">
     <g:render template="/project/form"/>
     <hr/>
 

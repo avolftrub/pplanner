@@ -17,10 +17,12 @@
 
         <g:javascript library="jquery" plugin="jquery"/>
         <g:javascript library="jquery-ui" plugin="jquery-ui"/>
-
-		<g:layoutHead/>
+        %{--<g:set var="requestLng" value="${org.springframework.web.servlet.support.RequestContextUtils.getLocale(request).getLanguage()}"/>--}%
+        %{--<g:datepicker language="${requestLng}" />--}%
         <r:layoutResources />
-        <script src="${resource(dir: "js", file: "projects.js")}" type="text/javascript"></script>
+        <g:layoutHead/>
+
+        %{--<script src="${resource(dir: "js", file: "projects.js")}" type="text/javascript"></script>--}%
 	</head>
 	<body>
         <g:renderHeader/>

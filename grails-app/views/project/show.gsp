@@ -29,9 +29,13 @@
 </div>
 
 <div class="content">
-<h1>${project.name},&nbsp;<span class="projectStatus"><g:message code="${'project.status.'+project.status}"/></span></h1>
+    <h1>
+        <span class="createDate">${message(code: 'project.date.of.creation', args: [formatPlainDate(value: project.createDate)])}</span>
+        ${project.name},&nbsp;<span class="projectStatus"><g:message
+            code="${'project.status.' + project.status}"/></span>
+    </h1>
 
-<table class="entityShow">
+    <table class="entityShow">
     <colgroup>
         <col width="150">
         <col width="150">

@@ -5,4 +5,9 @@ class Dealer {
 
     static constraints = {
     }
+
+    @Override
+    public String toString() {
+        return name
+    }
 }

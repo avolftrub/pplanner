@@ -111,6 +111,16 @@ public class MainTagLib {
                 out << "</span>"
             }
         }
+    }
 
+    /**
+     * Initialize datepicker.
+     */
+    def datepicker = {attrs ->
+        def lang = attrs.language ?: (request.language ?: 'en')
+        if (lang == 'ru') {
+            out << javascript(library: 'ui.datepicker-ru')
+        }
+        out << "<script type=\"text/javascript\">jQuery(document).ready(function(){setDatepickerDefaults('${lang}')});</script>"
     }
 }

@@ -10,19 +10,25 @@
   </g:if>
   <g:form action="signIn">
     <input type="hidden" name="targetUri" value="${targetUri}" />
-    <table>
-      <tbody>
+    <table class="loginTable">
+        <colgroup>
+            <col width="20%">
+            <col width="80%">
+        </colgroup>
+       <tbody>
         <tr>
-          <td>Username:</td>
+          <td><g:message code="login.username"/>:</td>
           <td><input type="text" name="username" value="${username}" /></td>
         </tr>
         <tr>
-          <td>Password:</td>
+          <td><g:message code="login.password"/>:</td>
           <td><input type="password" name="password" value="" /></td>
         </tr>
         <tr>
-          <td>Remember me?:</td>
-          <td><g:checkBox name="rememberMe" value="${rememberMe}" /></td>
+          <td></td>
+          <td><g:checkBox class="rememberme" id="remme" name="rememberMe" value="${rememberMe}" />
+              <label for="remme"><g:message code="login.remember"/></label>
+          </td>
         </tr>
         <tr>
           <td />
