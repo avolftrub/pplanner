@@ -4,7 +4,8 @@ class User {
     String firstName
     String lastName
     ShiroRole role
-    Dealer dealer
+
+    static belongsTo = [dealer: Dealer]
     
     static constraints = {
         username(nullable: false, blank: false)

@@ -274,7 +274,7 @@ label {
 
 input, select, textarea {
 	background-color: #fcfcfc;
-	border: 1px solid #cccccc;
+	border: 1px solid #AAAAAA;
 	font-size: 13px;
 	padding: 0.2em 0.4em;
 }
@@ -306,7 +306,7 @@ input[type=checkbox], input[type=radio] {
 
 input:focus, select:focus, textarea:focus {
 	background-color: #ffffff;
-	border: 1px solid #eeeeee;
+	border: 1px solid #CCCCCC;
 	outline: 0;
 	   -moz-box-shadow: 0 0 0.5em #ffffff;
 	-webkit-box-shadow: 0 0 0.5em #ffffff;
@@ -638,7 +638,7 @@ table td {
 }
 
 div.actionMenu {
-    margin-bottom: 70px;
+    margin-bottom: 50px;
     margin-top: 20px;
 }
 

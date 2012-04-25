@@ -14,7 +14,7 @@
         <h1 class="newEntity"><g:message code="project.action.new.title"/></h1>
     </g:if>
     <g:else>
-        <h1 class="newEntity">
+        <h1>
             <span class="createDate">${message(code: 'project.date.of.creation', args: [formatPlainDate(value: project.createDate)])}</span>
             <g:message code="project.action.edit.title"/>
         </h1>

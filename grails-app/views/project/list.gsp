@@ -49,9 +49,11 @@
         </g:each>
         </tbody>
     </table>
-    <div class="pagination">
-        <g:paginate total="${total}" />
-    </div>
+    <g:if test="${filter.max < total}">
+        <div class="pagination">
+            <g:paginate total="${total}" />
+        </div>
+    </g:if>
 </div>
 </body>
 </html>

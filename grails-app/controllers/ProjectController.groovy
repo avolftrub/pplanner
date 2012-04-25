@@ -1,10 +1,13 @@
 import ru.appbio.ProjectStatus
 import org.joda.time.LocalDate
 import java.text.SimpleDateFormat
+import ru.appbio.SearchParameters
 
 class ProjectController {
 
     def userService
+
+    def projectService
 
     def show = {
         def project = Project.get(params.id)
@@ -25,8 +28,9 @@ class ProjectController {
     }
 
     def list = {
-        def list = Project.list()
-        [projects: list, total: list.size()]
+        def filter = prepareFilter()
+        def results = projectService.findProjects(filter)
+        [projects: results.list, total: results.totalCount, filter: filter]
     }
 
     def update = {
@@ -43,7 +47,14 @@ class ProjectController {
             }
         }
 
-        project.properties = params
+        project.status = ProjectStatus.getById(params.status as Integer)
+        project.dealer = Dealer.get(params.dealer)
+
+//        bindData(disease, params, [exclude: ['mimNumbers', 'russianSynonyms', 'englisghSynonyms', 'mkbCodes']])
+        bindData(project, params, [exclude: ['status', 'dealer']])
+
+
+//        project.properties = params
 
         project.validate()
 
@@ -61,7 +72,7 @@ class ProjectController {
         project.dealer = Dealer.get(params.dealer)
 
 //        bindData(disease, params, [exclude: ['mimNumbers', 'russianSynonyms', 'englisghSynonyms', 'mkbCodes']])
-        bindData(project, params, [exclude: ['status']])
+        bindData(project, params, [exclude: ['status', 'dealer']])
 
         project.validate()
 
@@ -85,5 +96,20 @@ class ProjectController {
 
     def create = {
         [project: new Project(), isNew: true, user: userService.getCurrentUser()]
+    }
+
+    private def prepareFilter() {
+        if (!params."sort") {
+            params.sort = "name"
+            params.order = "asc"
+
+        }
+
+        def filter = new SearchParameters()
+
+        bindData(filter, params)
+        params.max = Math.min(params.int('max') ?: 20, 100)
+        filter.bindLimits(params)
+        return filter
     }
 }
