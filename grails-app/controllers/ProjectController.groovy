@@ -98,6 +98,18 @@ class ProjectController {
         [project: new Project(), isNew: true, user: userService.getCurrentUser()]
     }
 
+    /** Exports projects list to excel */
+    def exportToExcel = {
+        def filter = prepareFilter()
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        response.setHeader("Content-Disposition", "attachment; filename=projects.xlsx")
+
+//        response.setContentLength((int) tmpExcelFile.length())
+        projectService.exportToExcel(response.outputStream, filter)
+        response.outputStream.flush()
+    }
+
+
     private def prepareFilter() {
         if (!params."sort") {
             params.sort = "name"

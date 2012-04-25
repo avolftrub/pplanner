@@ -9,6 +9,12 @@
 <div class="actionMenu">
     <ul>
         <li>
+            <g:link controller="project" action="exportToExcel">
+                <img class="actionIcon" src="${resource(dir: 'images', file: 'excel.png')}" alt="${message(code: 'project.action.excel')}"/><g:message code="project.action.excel"/>
+            </g:link>
+        </li>
+
+        <li>
             <g:link controller="project" action="create">
                 <img class="actionIcon" src="${resource(dir: 'images', file: 'add.png')}" alt="${message(code: 'project.action.add')}"/><g:message code="project.action.add"/>
             </g:link>

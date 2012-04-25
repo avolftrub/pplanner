@@ -31,8 +31,13 @@
           </td>
         </tr>
         <tr>
-          <td />
-          <td><input type="submit" value="Sign in" /></td>
+          <td></td>
+            <td>
+                <button class="Login" type="submit">
+                    <span><g:message code="login"/></span>
+                </button>
+            </td>
+            %{--<td><input type="submit" value="Sign in" /></td>--}%
         </tr>
       </tbody>
     </table>

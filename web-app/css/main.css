@@ -734,6 +734,15 @@ div.buttonBlock button {
     font-size: 15px;
 }
 
+button.Login {
+    font-size: 12px;
+}
+
+button.Login span {
+    padding: 0 15px;
+}
+
+
 div.buttonBlock button span {
     padding: 0 15px;
 }
@@ -771,6 +780,14 @@ h1.newEntity {
 
 span.entityValue {
     color: black;
+}
+
+div.actionMenu a {
+    outline: none;
+}
+
+input[type="submit"]:hover {
+    background-color: yellow;
 }
 
 
