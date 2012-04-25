@@ -3,15 +3,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main2">
-    <title><g:message code="project.action.show.title"/></title>
     <script src="${resource(dir: "js", file: "projects.js")}" type="text/javascript"></script>
 </head>
 <body>
 <div>
 </div>
-<div class="content">
+<div class="content edit">
     <g:if test="${isNew}">
-        <h1 class="newEntity"><g:message code="project.action.new.title"/></h1>
+        <h1 class="newEntity"><g:message code="project.action.create.title"/></h1>
     </g:if>
     <g:else>
         <h1>

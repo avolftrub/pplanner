@@ -26,7 +26,7 @@ class Project {
         contactPhone(blank: false, size:  1..128)
         name(blank: false, size:  1..1024)
         sum(min: new BigDecimal(0))
-        comments(nullable: true, size: 1..1024)
+        comments(nullable: true, size: 1..2048)
         city(nullable: true)
         releaseDate(nullable: true, validator: { val, obj ->
             if (val) {

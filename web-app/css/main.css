@@ -120,6 +120,11 @@ div.appHeader a {
 .content {
 }
 
+.content.show, .content.edit {
+    margin-top: 70px;
+}
+
+
 .content h1 {
 	/*border-bottom: 1px solid #CCCCCC;*/
 	margin: 0.8em 1em 0.3em;
@@ -506,7 +511,7 @@ th.desc a {
 }
 
 th:hover, tr:hover {
-	background: #dddddd;
+	/*background: #dddddd;*/
 }
 
 /* PAGINATION */
