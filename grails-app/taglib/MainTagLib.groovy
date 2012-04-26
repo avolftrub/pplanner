@@ -16,6 +16,12 @@ public class MainTagLib {
         out << render(template: '/templates/header', model: [user: user])
     }
 
+    def renderMenu = {
+        def user = userService.getCurrentUser()
+        out << render(template: '/templates/mainmenu', model: [user: user])
+    }
+
+
     /** Formats JODA objects as "21.08.2011"              */
     def formatPlainDate = {attrs ->
         if (!attrs.value) { return }

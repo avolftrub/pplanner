@@ -30,6 +30,10 @@
 </div>
 
 <div class="content show">
+    <h1>
+        <span class="createDate">${message(code: 'dealer.date.of.creation', args: [formatPlainDate(value: dealer.createDate)])}</span>
+        ${dealer.name}
+    </h1>
 
     <table class="entityShow">
     <colgroup>

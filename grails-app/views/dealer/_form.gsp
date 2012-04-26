@@ -1,12 +1,3 @@
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="layout" content="main2">
-    <script src="${resource(dir: "js", file: "dealers.js")}" type="text/javascript"></script>
-</head>
-<body>
-<div>
-</div>
 <div class="content edit">
     <g:if test="${isNew}">
         <h1 class="newEntity"><g:message code="dealer.action.create.title"/></h1>
@@ -42,5 +33,3 @@
     </table>
 
 </div>
-</body>
-</html>

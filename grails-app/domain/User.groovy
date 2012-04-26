@@ -1,15 +1,30 @@
+import org.joda.time.LocalDate
+
 class User {
+    LocalDate createDate = new LocalDate()
     String username
     String password
+    String password2
     String firstName
+    String middleName
     String lastName
     ShiroRole role
 
     static belongsTo = [dealer: Dealer]
-    
+
+    static transients = ['password2']
+
     static constraints = {
-        username(nullable: false, blank: false)
+        firstName(blank: false, size: 1..128)
+        lastName(blank: false, size: 1..128)
+        username(nullable: false, blank: false, email: true, unique: true)
+        middleName(nullable: true, size: 1..128)
         dealer(nullable: true)
+        password(size: 6..256, validator: {val, obj ->
+            if (val != obj.password2) {
+                ['passwords.mismatch']
+            }
+        })
     }
 
     transient def getName() {

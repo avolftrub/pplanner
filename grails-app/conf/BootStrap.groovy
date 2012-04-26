@@ -15,9 +15,11 @@ class BootStrap {
                 def dealer1 = new Dealer(name: "ООО Агентство Химэксперт", code: "XX9812R").save(failOnError: true)
                 def dealer2 = new Dealer(name: "\"TOO \"ZALMA Ltd.\" (ЦАЛМА Лтд)", code: "BB02S18").save(failOnError: true)
 
-                new User(username: "artem.volftrub@gmail.com", password: new Sha512Hash('password').toHex(),
+                new User(username: "artem.volftrub@gmail.com",
+                        password: new Sha512Hash('password').toHex(), password2: new Sha512Hash('password').toHex(),
                         role: ShiroRole.findByName(ShiroRole.ROLE_ADMIN), firstName: "Артем", lastName: "Вольфтруб").save(flush: true, failOnError: true)
-                new User(username: "avolftrub-test-kkk@gramant.ru", password: new Sha512Hash('password').toHex(),
+                new User(username: "avolftrub-test-kkk@gramant.ru",
+                        password: new Sha512Hash('password').toHex(), password2: new Sha512Hash('password').toHex(),
                         role: ShiroRole.findByName(ShiroRole.ROLE_DEALER), firstName: "Ксения",
                         lastName: "Продажная", dealer: dealer2).save(flush: true, failOnError: true)
 

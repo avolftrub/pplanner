@@ -79,7 +79,7 @@ class ProjectController {
         if (!project.hasErrors() && project.save()) {
             redirect(controller: 'project', action: 'show')
         } else {
-            render(view: '/project/create', model: [project: project, isNew: true, user: userService.getCurrentUser()])
+            render(view: '/project/create', model: [project: project, isNew: true, currentUser: userService.getCurrentUser()])
         }
     }
 
@@ -95,7 +95,7 @@ class ProjectController {
     }
 
     def create = {
-        [project: new Project(), isNew: true, user: userService.getCurrentUser()]
+        [project: new Project(), isNew: true, currentUser: userService.getCurrentUser()]
     }
 
     /** Exports projects list to excel */

@@ -32,6 +32,10 @@ html.no-cssgradients {
 	height: 100%;
 }
 
+.w45 {
+    width: 45% !important;
+}
+
 html * {
 	margin: 0;
 }
@@ -180,6 +184,10 @@ div.appHeader a {
 	zoom: 1;
 }
 
+.nav ul {
+    width: 100%;
+}
+
 .nav li {
 	display: block;
 	float: left;
@@ -188,6 +196,16 @@ div.appHeader a {
 	/*margin-right: 0.5em;*/
 	padding: 0;
 }
+
+.nav li.settings {
+    display: block;
+    float: right;
+    list-style-type: none;
+    margin-right: 10px !important;
+    /*margin-right: 0.5em;*/
+    /*padding: 0;*/
+}
+
 
 .nav a {
 	color: #FFFFFF;
@@ -371,7 +389,7 @@ fieldset.embedded legend {
 
 .message {
 	background: #f3f3ff;
-	border: 1px solid #b2d1ff;
+	border: 1px solid red;
 	color: #006dba;
 	   -moz-box-shadow: 0 0 0.25em #b2d1ff;
 	-webkit-box-shadow: 0 0 0.25em #b2d1ff;
@@ -399,8 +417,11 @@ fieldset.embedded legend {
 }
 
 .message {
-	background: transparent url(../images/skin/information.png) 0.5em 50% no-repeat;
+	background: transparent url(../images/skin/exclamation.png) 0.5em 50% no-repeat;
 	text-indent: 2.2em;
+    color: red;
+    font-size: 13px;
+
 }
 
 /* form fields with errors */
@@ -770,10 +791,6 @@ span.createDate {
     color: #525252;
 }
 
-.w45 {
-    width: 45%;
-}
-
 h1.newEntity {
     margin-top: 40px;
 }
@@ -788,6 +805,10 @@ div.actionMenu a {
 
 input[type="submit"]:hover {
     background-color: yellow;
+}
+
+a#changePassword {
+    font-size: 15px;
 }
 
 

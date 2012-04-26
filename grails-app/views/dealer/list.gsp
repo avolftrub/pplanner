@@ -30,7 +30,11 @@
         <tbody>
         <g:each in="${dealers}" status="i" var="nextDealer">
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                <td>${nextDealer.name}</td>
+                <td>
+                    <g:link controller="dealer" action="show" id="${nextDealer.id}">
+                        ${nextDealer.name}
+                    </g:link>
+                </td>
                 <td>${nextDealer.code}</td>
                 <td>
                     <g:link controller="dealer" action="edit" id="${nextDealer.id}">

@@ -58,7 +58,7 @@ class DealerController {
         if (!dealer.hasErrors() && dealer.save()) {
             redirect(controller: 'dealer', action: 'show')
         } else {
-            render(view: '/dealer/create', model: [dealer: dealer, isNew: true, user: userService.getCurrentUser()])
+            render(view: '/dealer/create', model: [dealer: dealer, isNew: true, currentUser: userService.getCurrentUser()])
         }
     }
 
@@ -74,7 +74,7 @@ class DealerController {
     }
 
     def create = {
-        [dealer: new Dealer(), isNew: true, user: userService.getCurrentUser()]
+        [dealer: new Dealer(), isNew: true, currentUser: userService.getCurrentUser()]
     }
 
     private def prepareFilter() {

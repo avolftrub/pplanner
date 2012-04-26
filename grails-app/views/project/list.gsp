@@ -40,7 +40,11 @@
         <tbody>
         <g:each in="${projects}" status="i" var="nextProject">
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                <td>${nextProject.name}</td>
+                <td>
+                    <g:link controller="project" action="show" id="${nextProject.id}">
+                        ${nextProject.name}
+                    </g:link>
+                </td>
                 <td>${nextProject.dealer?.name}</td>
                 <td>${nextProject.city}</td>
                 <td>${nextProject.sum}</td>

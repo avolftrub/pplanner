@@ -1,13 +1,4 @@
 <%@ page import="ru.appbio.ProjectStatus" %>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="layout" content="main2">
-    <script src="${resource(dir: "js", file: "projects.js")}" type="text/javascript"></script>
-</head>
-<body>
-<div>
-</div>
 <div class="content edit">
     <g:if test="${isNew}">
         <h1 class="newEntity"><g:message code="project.action.create.title"/></h1>
@@ -35,11 +26,11 @@
             <td><g:message code="project.dealer"/></td>
             <td>
                 <g:if test="${isNew}">
-                    <g:if test="${user?.isAdmin()}">
+                    <g:if test="${currentUser?.isAdmin()}">
                         <g:select name="dealer" class="w45" value="${project.dealer?.name}" optionKey="id" from="${Dealer.list()}"/>
                     </g:if>
                     <g:else>
-                        ${user?.dealer?.name}
+                        ${currentUser?.dealer?.name}
                     </g:else>
                 </g:if>
                 <g:else>
@@ -101,8 +92,15 @@
             </td>
         </tr>
 
+        <tr>
+            <td><g:message code="project.comments"/></td>
+            <td>
+                <g:textArea cols="100" rows="5" name="comments" value="${project.comments}" class="${hasErrors(bean: project, field: 'comments', 'errors')}"/>
+                <g:renderFieldErrors bean="${project}" field="comments"/>
+            </td>
+        </tr>
+
+
     </table>
 
 </div>
-</body>
-</html>

@@ -9,7 +9,7 @@ class Dealer {
     static hasMany = [user: User]
 
     static constraints = {
-        name(blank: false)
+        name(blank: false, size: 1..512)
         code(nullable: true)
     }
 

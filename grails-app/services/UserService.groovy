@@ -1,6 +1,9 @@
 import org.springframework.web.context.request.RequestAttributes
 import org.springframework.web.context.request.RequestContextHolder
 import org.apache.shiro.SecurityUtils
+import ru.appbio.SearchParameters
+import org.hibernate.criterion.Restrictions
+import org.hibernate.criterion.LikeExpression
 
 /**
  * Manage users.
@@ -26,5 +29,24 @@ public class UserService {
             return user
         }
         return null
+    }
+
+    /** Finds users with the speicified parameters             */
+    def findUsers(SearchParameters filter) {
+        User.createCriteria().list(filter.getLimits()) {
+
+            //quick search
+            if (filter.quickSearch) {
+                for (token in filter.quickSearch) {
+                    instance.add(
+                            Restrictions.disjunction().add(
+                                    new LikeExpression('firstName', token)).
+                                    add(new LikeExpression('middleName', token)).
+                                    add(new LikeExpression('lastName', token)).
+                                    add(new LikeExpression('email', token))
+                    )
+                }
+            }
+        }
     }
 }
