@@ -300,7 +300,7 @@ input, select, textarea {
 	background-color: #fcfcfc;
 	border: 1px solid #AAAAAA;
 	font-size: 13px;
-	padding: 0.2em 0.4em;
+	padding: 0.2em 0;
 }
 
 body {
@@ -696,7 +696,7 @@ table.entityEdit {
     border: none;
 }
 
-table.entityEdit input {
+table.entityEdit input, table.entityEdit textarea {
     width: 90%;
 }
 
@@ -742,7 +742,7 @@ input.calendarInput {
     /*margin-right: 5px;*/
 /**/
     background: url("../images/calendar-month.png") no-repeat scroll 120px 3px #FFFFFF;
-    width: 130px !important;
+    width: 140px !important;
 }
 
 div.buttonBlock {

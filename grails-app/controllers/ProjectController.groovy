@@ -143,8 +143,18 @@ class ProjectController {
 
         query += " order by name "
 
+        log.error "TTTTT:Searching for cities: $query"
+        params.each {
+            log.error "HHHHH: $it"
+        }
+
         def result = City.executeQuery(query, params)
 
+        log.error "TTTTT:Found results:"
+
+        params.each {
+            log.error "HHHHH: $it"
+        }
 
 
 //        def result = projectService.findCities(terms)

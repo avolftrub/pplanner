@@ -33,19 +33,13 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE"
             pooled = true
-            properties {
-               maxActive = -1
-               minEvictableIdleTimeMillis=1800000
-               timeBetweenEvictionRunsMillis=1800000
-               numTestsPerEvictionRun=3
-               testOnBorrow=true
-               testWhileIdle=true
-               testOnReturn=true
-               validationQuery="SELECT 1"
-            }
+            driverClassName = "com.mysql.jdbc.Driver"
+            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+            url = "jdbc:mysql://217.65.6.152:3306/20071461_2?autoreconnect=true&useUnicode=yes&characterEncoding=UTF-8"
+            dbCreate = "validate"
+            username = "b20071461_2"
+            password = "Jkl9nV7h"
         }
     }
 }

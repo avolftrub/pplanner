@@ -85,6 +85,14 @@
         </tr>
 
         <tr>
+            <td><g:message code="project.sum.rub"/></td>
+            <td>
+                <g:textField name="sum" value="${project.sum}" class="w45 ${hasErrors(bean: project, field: 'sum', 'errors')}"/>&nbsp;*
+                <g:renderFieldErrors bean="${project}" field="sum"/>
+            </td>
+        </tr>
+
+        <tr>
             <td><g:message code="project.releaseDate"/></td>
             <td>
                 <input class="calendarInput ${hasErrors(bean: project, field: 'releaseDate', 'errors')}" type="text" id="releaseDate" name="releaseDate" value="${formatPlainDate(value: project.releaseDate)}"/>
