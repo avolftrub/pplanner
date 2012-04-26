@@ -10,6 +10,7 @@
 
 <g:form method="post" controller="user" action="save" name="userCreateForm">
     <g:hiddenField name="admin" value="${admin}"/>
+    <g:hiddenField id="changePwdFlag" name="pwdChange" value="true"/>
     <g:render template="/user/form"/>
     <hr/>
 

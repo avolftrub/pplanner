@@ -42,14 +42,6 @@ class ProjectController {
             redirect(controller: 'project', action: 'list')
         }
 
-        if (params.releaseDate) {
-            try {
-                params.releaseDate = new LocalDate (new SimpleDateFormat("dd.MM.yyyy").parse(params.releaseDate).getTime())
-            } catch (Exception ex) {
-                params.releaseDate = null
-            }
-        }
-
         project.status = ProjectStatus.getById(params.status as Integer)
         project.dealer = Dealer.get(params.dealer)
 
@@ -57,12 +49,7 @@ class ProjectController {
             project.city = City.findByName(params.city?.trim())
         }
 
-
-//        bindData(disease, params, [exclude: ['mimNumbers', 'russianSynonyms', 'englisghSynonyms', 'mkbCodes']])
-        bindData(project, params, [exclude: ['status', 'dealer', 'city', 'releaseDate']])
-
-
-//        project.properties = params
+        bindData(project, params, [exclude: ['status', 'dealer', 'city']])
 
         project.validate()
 
@@ -82,8 +69,7 @@ class ProjectController {
             project.city = City.findByName(params.city?.trim())
         }
 
-//        bindData(disease, params, [exclude: ['mimNumbers', 'russianSynonyms', 'englisghSynonyms', 'mkbCodes']])
-        bindData(project, params, [exclude: ['status', 'dealer', 'city', 'releaseDate']])
+        bindData(project, params, [exclude: ['status', 'dealer', 'city']])
 
         project.validate()
 

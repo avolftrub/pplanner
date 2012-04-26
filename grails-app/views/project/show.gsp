@@ -73,7 +73,12 @@
 
         <tr>
             <td><g:message code="project.releaseDate"/></td>
-            <td>${project.releaseDate}</td>
+            <td><g:formatPlainDate value="${project.releaseDate}"/></td>
+        </tr>
+
+        <tr>
+            <td><g:message code="project.closeDate"/></td>
+            <td><g:formatPlainDate value="${project.closeDate}"/></td>
         </tr>
 
         <tr>

@@ -47,7 +47,7 @@
         <tr>
             <td><g:message code="user.username"/></td>
             <td>
-                <g:textField name="username" value="${user.username}" class="${hasErrors(bean: user, field: 'username', 'errors')}"/>
+                <g:textField autocomplete="off" name="username" value="${user.username}" class="${hasErrors(bean: user, field: 'username', 'errors')}"/>&nbsp;*
                 <g:renderFieldErrors bean="${user}" field="username"/>
             </td>
         </tr>
@@ -62,7 +62,7 @@
         <tr class="pwdBlock" style="display: ${pwdChange ? '' : 'none'};">
             <td><g:message code="user.password"/></td>
             <td>
-                <g:passwordField name="password" value="${user.password}" class="w45 ${hasErrors(bean: user, field: 'password', 'errors')}"/>
+                <g:passwordField autocomplete="off" name="password" value="${user.password}" class="w45 ${hasErrors(bean: user, field: 'password', 'errors')}"/>&nbsp;*
                 <g:renderFieldErrors bean="${user}" field="password"/>
             </td>
         </tr>
@@ -70,7 +70,7 @@
         <tr class="pwdBlock" style="display: ${pwdChange ? '' : 'none'};">
             <td><g:message code="user.password2"/></td>
             <td>
-                <g:passwordField name="password2" value="${user.password2}" class="w45 ${hasErrors(bean: user, field: 'password2', 'errors')}"/>
+                <g:passwordField autocomplete="off" name="password2" value="${user.password2}" class="w45 ${hasErrors(bean: user, field: 'password2', 'errors')}"/>&nbsp;*
                 <g:renderFieldErrors bean="${user}" field="password2"/>
             </td>
         </tr>

@@ -106,7 +106,7 @@ class UserController {
     }
 
     def create = {
-        [user: new User(), isNew: true, currentUser: userService.getCurrentUser(), admin: params.admin]
+        [user: new User(), isNew: true, pwdChange: true, currentUser: userService.getCurrentUser(), admin: params.admin]
     }
 
     private def prepareFilter() {

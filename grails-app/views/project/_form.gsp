@@ -12,8 +12,8 @@
 
     <table class="entityEdit">
         <colgroup>
-            <col width="30%">
-            <col width="70%">
+            <col width="35%">
+            <col width="65%">
         </colgroup>
         <tr>
             <td><g:message code="project.name"/></td>
@@ -97,6 +97,14 @@
             <td>
                 <input class="calendarInput ${hasErrors(bean: project, field: 'releaseDate', 'errors')}" type="text" id="releaseDate" name="releaseDate" value="${formatPlainDate(value: project.releaseDate)}"/>
                 <g:renderFieldErrors bean="${project}" field="releaseDate"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td><g:message code="project.closeDate"/></td>
+            <td>
+                <input class="calendarInput ${hasErrors(bean: project, field: 'closeDate', 'errors')}" type="text" id="closeDate" name="closeDate" value="${formatPlainDate(value: project.closeDate)}"/>
+                <g:renderFieldErrors bean="${project}" field="closeDate"/>
             </td>
         </tr>
 

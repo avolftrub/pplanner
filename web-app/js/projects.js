@@ -2,20 +2,24 @@ $(document).ready(function () {
     $.datepicker.setDefaults( $.datepicker.regional[ "ru" ] );
 //    $( "#datepicker" ).datepicker( $.datepicker.regional[ "ru" ] );                               `
 
-    var dp = $("#releaseDate").datepicker({
+    var rd = $("#releaseDate").datepicker({
         dateFormat: 'dd.mm.yy',
         buttonImage: "../images/delete.png",
         changeYear: false,
         numberOfMonths: 1,
         firstDay: 1
-
-//        showOn: 'both'
     });
+    $("#releaseDate").datepicker('setDate', $('#releaseDate').val());
 
-//    dp.setDate($.datepicker.parseDate("#releaseDate").val())
-    var setdate = $('#releaseDate').val();
-//    var qqq= $.datepicker.parseDate($("#releaseDate").val());
-    $("#releaseDate").datepicker('setDate', setdate);
+    var cd = $("#closeDate").datepicker({
+        dateFormat: 'dd.mm.yy',
+        buttonImage: "../images/delete.png",
+        changeYear: false,
+        numberOfMonths: 1,
+        firstDay: 1
+    });
+    $("#closeDate").datepicker('setDate', $('#closeDate').val());
+
 //    $("#releaseDate").datepicker('setDate', $.datepicker.parseDate("#releaseDate"));
 
 
