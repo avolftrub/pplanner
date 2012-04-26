@@ -2,6 +2,7 @@ import ru.appbio.ProjectStatus
 import org.joda.time.LocalDate
 import java.text.SimpleDateFormat
 import ru.appbio.SearchParameters
+import ru.appbio.ProjectSearchParameters
 
 class ProjectController {
 
@@ -10,8 +11,8 @@ class ProjectController {
     def projectService
 
     def show = {
-        def project = Project.get(params.id)
-        if (!project) {
+        def project = projectService.findProjects(prepareFilter(params))[0]
+            if (!project) {
             redirect(controller: 'project', action: 'list')
         }
 
@@ -19,7 +20,7 @@ class ProjectController {
     }
 
     def edit = {
-        def project = Project.get(params.id)
+        def project = projectService.findProjects(prepareFilter(params))[0]
         if (!project) {
             redirect(controller: 'project', action: 'list')
         }
@@ -28,13 +29,13 @@ class ProjectController {
     }
 
     def list = {
-        def filter = prepareFilter()
+        def filter = prepareFilter(params)
         def results = projectService.findProjects(filter)
         [projects: results.list, total: results.totalCount, filter: filter]
     }
 
     def update = {
-        def project = Project.get(params.id)
+        def project = projectService.findProjects(prepareFilter(params))[0]
         if (!project) {
             redirect(controller: 'project', action: 'list')
         }
@@ -84,7 +85,7 @@ class ProjectController {
     }
 
     def delete = {
-        def project = Project.get(params.id)
+        def project = projectService.findProjects(prepareFilter(params))[0]
         if (!project) {
             redirect(controller: 'project', action: 'list')
         }
@@ -100,7 +101,7 @@ class ProjectController {
 
     /** Exports projects list to excel */
     def exportToExcel = {
-        def filter = prepareFilter()
+        def filter = prepareFilter(params)
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         response.setHeader("Content-Disposition", "attachment; filename=projects.xlsx")
 
@@ -110,14 +111,17 @@ class ProjectController {
     }
 
 
-    private def prepareFilter() {
+    private def prepareFilter(params) {
         if (!params."sort") {
             params.sort = "name"
             params.order = "asc"
 
         }
 
-        def filter = new SearchParameters()
+        def filter = new ProjectSearchParameters()
+
+        filter.projectId = params.long("id")
+        filter.dealerId = userService.currentUser?.dealer?.id
 
         bindData(filter, params)
         params.max = Math.min(params.int('max') ?: 20, 100)

@@ -47,7 +47,7 @@
         </colgroup>
         <tr>
             <td><g:message code="project.createDate"/></td>
-            <td><g:formatPlainDate value="${project.createDate}"/></td>
+            <td>${project.dealer?.name}</td>
         </tr>
         <tr>
             <td><g:message code="project.customer"/></td>

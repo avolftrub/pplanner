@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.streaming.SXSSFWorkbook
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Cell
+import ru.appbio.ProjectSearchParameters
 
 class ProjectService {
 
@@ -11,8 +12,16 @@ class ProjectService {
             "Контактная информация", "Продукт", "Планируемая дата реализации", "Сумма", "Статус", "Примечания", "Дата закрытия"]
 
 /** Finds projects with the speicified parameters             */
-    def findProjects(SearchParameters filter) {
+    def findProjects(ProjectSearchParameters filter) {
         Project.createCriteria().list(filter.getLimits()) {
+
+            if (filter.dealerId) {
+                eq ("dealer.id", filter.dealerId)
+            }
+
+            if (filter.projectId) {
+                eq ("id", filter.projectId)
+            }
 
             //quick search
             if (filter.quickSearch) {

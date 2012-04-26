@@ -20,11 +20,7 @@ class User {
         username(nullable: false, blank: false, email: true, unique: true)
         middleName(nullable: true, size: 1..128)
         dealer(nullable: true)
-        password(size: 6..256, validator: {val, obj ->
-            if (val != obj.password2) {
-                ['passwords.mismatch']
-            }
-        })
+        password(size: 6..256)
     }
 
     transient def getName() {
