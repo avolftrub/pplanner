@@ -1,12 +1,13 @@
 import org.joda.time.LocalDate
 import ru.appbio.ProjectStatus
+import City
 
 class Project {
 
     LocalDate createDate = new LocalDate()
     String customer
     String department
-    String city
+    City city
     String contactPerson
     String contactPhone
     String name

@@ -13,8 +13,16 @@ hibernate {
 environments {
     development {
         dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:h2:mem:devDb;MVCC=TRUE"
+//            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+//            url = "jdbc:h2:mem:devDb;MVCC=TRUE"
+            pooled = true
+            driverClassName = "com.mysql.jdbc.Driver"
+            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+            //            driverClassName = "com.mysql.jdbc.Driver"
+            url = "jdbc:mysql://localhost:3306/20071461_2?autoreconnect=true&useUnicode=yes&characterEncoding=UTF-8"
+            dbCreate = "update"
+            username = "root"
+                        loggingSql = true
         }
     }
     test {

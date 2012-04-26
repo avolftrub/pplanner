@@ -29,4 +29,7 @@ $(document).ready(function () {
     $(".deleteProjectLink").live('click', function() {
         return confirm($(this).attr('helpertext'));
     })
+
+    var options = { source: $("#city").attr("lookupUrl") };
+    $("#city").autocomplete(options);
 });

@@ -12,41 +12,43 @@ class BootStrap {
 
             development {
 
-                def dealer1 = new Dealer(name: "ООО Агентство Химэксперт", code: "XX9812R").save(failOnError: true)
-                def dealer2 = new Dealer(name: "\"TOO \"ZALMA Ltd.\" (ЦАЛМА Лтд)", code: "BB02S18").save(failOnError: true)
+                if (User.count ==0) {
+                    def dealer1 = new Dealer(name: "ООО Агентство Химэксперт", code: "XX9812R").save(failOnError: true)
+                    def dealer2 = new Dealer(name: "\"TOO \"ZALMA Ltd.\" (ЦАЛМА Лтд)", code: "BB02S18").save(failOnError: true)
 
-                new User(username: "artem.volftrub@gmail.com",
-                        password: new Sha512Hash('password').toHex(), password2: new Sha512Hash('password').toHex(),
-                        role: ShiroRole.findByName(ShiroRole.ROLE_ADMIN), firstName: "Артем", lastName: "Вольфтруб").save(flush: true, failOnError: true)
-                new User(username: "avolftrub-test-ggg@gramant.ru",
-                        password: new Sha512Hash('password').toHex(), password2: new Sha512Hash('password').toHex(),
-                        role: ShiroRole.findByName(ShiroRole.ROLE_DEALER), firstName: "Галина",
-                        lastName: "Головоломкина", dealer: dealer1).save(flush: true, failOnError: true)
+                    new User(username: "artem.volftrub@gmail.com",
+                            password: new Sha512Hash('password').toHex(), password2: new Sha512Hash('password').toHex(),
+                            role: ShiroRole.findByName(ShiroRole.ROLE_ADMIN), firstName: "Артем", lastName: "Вольфтруб").save(flush: true, failOnError: true)
+                    new User(username: "avolftrub-test-ggg@gramant.ru",
+                            password: new Sha512Hash('password').toHex(), password2: new Sha512Hash('password').toHex(),
+                            role: ShiroRole.findByName(ShiroRole.ROLE_DEALER), firstName: "Галина",
+                            lastName: "Головоломкина", dealer: dealer1).save(flush: true, failOnError: true)
 
-                new User(username: "avolftrub-test-kkk@gramant.ru",
-                        password: new Sha512Hash('password').toHex(), password2: new Sha512Hash('password').toHex(),
-                        role: ShiroRole.findByName(ShiroRole.ROLE_DEALER), firstName: "Ксения",
-                        lastName: "Продажная", dealer: dealer2).save(flush: true, failOnError: true)
+                    new User(username: "avolftrub-test-kkk@gramant.ru",
+                            password: new Sha512Hash('password').toHex(), password2: new Sha512Hash('password').toHex(),
+                            role: ShiroRole.findByName(ShiroRole.ROLE_DEALER), firstName: "Ксения",
+                            lastName: "Продажная", dealer: dealer2).save(flush: true, failOnError: true)
 
-                for(int i=1; i<40; i++) {
-                    log.info "FFFF: it=$i"
-                    def p = new Project(
-                            createDate: new LocalDate(),
-                            customer: "Клиент № $i",
-                            department: "Административно-хозяйственный отдел № $i",
-                            contactPerson: "Закулачный Степан Юрьевич $it",
-                            contactPhone: "+8 800 2 000 $i",
-                            name: "Поставка масс спектрометра для детского сада № $i",
-                            releaseDate: new LocalDate().plusMonths(i),
-                            sum: new BigDecimal(Math.round(Math.random() * 300000)),
-                            status: ProjectStatus.SPECIFICATION_AGREED,
-                            comments: "Какой чудестный день")
-                    if (i< 20) {
-                        p.dealer = dealer1
-                    } else {
-                        p.dealer = dealer2
+                    for(int i=1; i<40; i++) {
+                        log.info "FFFF: it=$i"
+                        def p = new Project(
+                                createDate: new LocalDate(),
+                                customer: "Клиент № $i",
+                                department: "Административно-хозяйственный отдел № $i",
+                                contactPerson: "Закулачный Степан Юрьевич $it",
+                                contactPhone: "+8 800 2 000 $i",
+                                name: "Поставка масс спектрометра для детского сада № $i",
+                                releaseDate: new LocalDate().plusMonths(i),
+                                sum: new BigDecimal(Math.round(Math.random() * 300000)),
+                                status: ProjectStatus.SPECIFICATION_AGREED,
+                                comments: "Какой чудестный день")
+                        if (i< 20) {
+                            p.dealer = dealer1
+                        } else {
+                            p.dealer = dealer2
+                        }
+                        p.save(failOnError: true)
                     }
-                    p.save(failOnError: true)
                 }
             }
         }

@@ -3,6 +3,8 @@ import org.joda.time.LocalDate
 import java.text.SimpleDateFormat
 import ru.appbio.SearchParameters
 import ru.appbio.ProjectSearchParameters
+import grails.converters.JSON
+import ru.appbio.utils.Highlighter
 
 class ProjectController {
 
@@ -51,8 +53,13 @@ class ProjectController {
         project.status = ProjectStatus.getById(params.status as Integer)
         project.dealer = Dealer.get(params.dealer)
 
+        if (params.city?.trim()?.length() != 0){
+            project.city = City.findByName(params.city?.trim())
+        }
+
+
 //        bindData(disease, params, [exclude: ['mimNumbers', 'russianSynonyms', 'englisghSynonyms', 'mkbCodes']])
-        bindData(project, params, [exclude: ['status', 'dealer']])
+        bindData(project, params, [exclude: ['status', 'dealer', 'city', 'releaseDate']])
 
 
 //        project.properties = params
@@ -71,9 +78,12 @@ class ProjectController {
 
         project.status = ProjectStatus.getById(params.status as Integer)
         project.dealer = Dealer.get(params.dealer)
+        if (params.city?.trim()?.length() != 0){
+            project.city = City.findByName(params.city?.trim())
+        }
 
 //        bindData(disease, params, [exclude: ['mimNumbers', 'russianSynonyms', 'englisghSynonyms', 'mkbCodes']])
-        bindData(project, params, [exclude: ['status', 'dealer']])
+        bindData(project, params, [exclude: ['status', 'dealer', 'city', 'releaseDate']])
 
         project.validate()
 
@@ -108,6 +118,49 @@ class ProjectController {
 //        response.setContentLength((int) tmpExcelFile.length())
         projectService.exportToExcel(response.outputStream, filter)
         response.outputStream.flush()
+    }
+
+    def lookupCity = {
+        def q = params.term?.replaceAll(/[\*\\\+\-\!\(\)\:\^\{\}\~\?\"\'\]\[]/, " ")?.trim()
+        def terms = []
+        for (token in q?.split(" ")) {
+            if (token.trim().length() > 0) {
+                terms << token.trim()
+            }
+        }
+
+
+        def query = "from City ${terms ? ' where ' : ''}"
+
+        def params = []
+        terms.eachWithIndex { nextTerm, index ->
+            query += " ( lower(name) like ? escape '!' ) "
+            params << '%' + projectService.escape(nextTerm.toLowerCase(), '!' as char) + '%'
+            if (index < terms.size() - 1) {
+                query += " and "
+            }
+        }
+
+        query += " order by name "
+
+        def result = City.executeQuery(query, params)
+
+
+
+//        def result = projectService.findCities(terms)
+
+//        def data = []
+//        result.each {
+//            data << [it.name]
+//            data << [label: Highlighter.highlight(it.name, terms, '<strong>', '</strong>'), value: it.name]
+//        }
+
+
+
+
+        render(contentType: 'text/json') {
+            result.collect {it.name}
+        }
     }
 
 

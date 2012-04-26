@@ -5,6 +5,8 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Cell
 import ru.appbio.ProjectSearchParameters
+import java.text.StringCharacterIterator
+import java.text.CharacterIterator
 
 class ProjectService {
 
@@ -27,6 +29,16 @@ class ProjectService {
             if (filter.quickSearch) {
                 for (token in filter.quickSearch) {
                     like('name', token)
+                }
+            }
+        }
+    }
+
+    def findCities(terms) {
+        return City.createCriteria().list() {
+            and {
+                for (token in terms) {
+                    'ilike'("name", '%' + escape(token, '!' as char) + '%')
                 }
             }
         }
@@ -84,4 +96,25 @@ class ProjectService {
 
         log.info "ProjectService: Export finished."
     }
+
+    public static String escape(String src, char escapeChar) {
+        final StringBuilder result = new StringBuilder();
+        final StringCharacterIterator iterator = new StringCharacterIterator(src);
+        char character = iterator.current();
+        while (character != CharacterIterator.DONE) {
+            switch (character) {
+                case '_':
+                case '%':
+                case '!':
+                case '\\':
+                    result.append(escapeChar);
+                default:
+                    result.append(character);
+                    break;
+            }
+            character = iterator.next();
+        }
+        return result.toString();
+    }
+
 }

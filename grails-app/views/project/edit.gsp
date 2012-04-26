@@ -21,6 +21,7 @@
 
 <g:form method="post" controller="project" action="update" name="projectForm">
     <g:hiddenField name="id" value="${project.id}"/>
+    <g:hiddenField name="dealer" value="${project.dealer?.id}"/>
     <g:render template="/project/form"/>
     <hr/>
 

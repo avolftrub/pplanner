@@ -1,5 +1,6 @@
 <div class="nav" role="navigation">
     <ul>
+        <shiro:authenticated>
         <shiro:hasRole name="${ShiroRole.ROLE_ADMIN}">
             <shiro:user>
                 <li class="settings">
@@ -26,5 +27,6 @@
                 <g:message code="section.projects"/>
             </g:link>
         </li>
+        </shiro:authenticated>
     </ul>
 </div>

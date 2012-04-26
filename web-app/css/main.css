@@ -176,6 +176,7 @@ div.appHeader a {
 	        box-shadow: 0 0 3px 1px #aaaaaa;
 	zoom: 1;
     font-size: 15px;
+    min-height: 28px;
 }
 
 .nav ul {

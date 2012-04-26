@@ -46,7 +46,7 @@
             <col width="65%">
         </colgroup>
         <tr>
-            <td><g:message code="project.createDate"/></td>
+            <td><g:message code="project.dealer"/></td>
             <td>${project.dealer?.name}</td>
         </tr>
         <tr>
@@ -59,7 +59,7 @@
         </tr>
         <tr>
             <td><g:message code="project.city"/></td>
-            <td>${project.city}</td>
+            <td>${project.city?.name}</td>
         </tr>
         <tr>
             <td><g:message code="project.contactPerson"/></td>

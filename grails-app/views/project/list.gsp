@@ -30,7 +30,7 @@
         <tr>
             <g:sortableColumn action="list" params="${params}" property="name" title="${g.message(code:'project.name.short')}" class="${list?'':'disabled'}"/>
             <g:sortableColumn action="list" params="${params}" property="dealer" title="${g.message(code:'project.dealer.short')}" class="${list?'':'disabled'}"/>
-            <g:sortableColumn action="list" params="${params}" property="city" title="${g.message(code:'project.city.short')}" class="${list?'':'disabled'}"/>
+            <g:sortableColumn action="list" params="${params}" property="city.name" title="${g.message(code:'project.city.short')}" class="${list?'':'disabled'}"/>
             <g:sortableColumn action="list" params="${params}" property="sum" title="${g.message(code:'project.sum.short')}" class="${list?'':'disabled'}"/>
             <g:sortableColumn action="list" params="${params}" property="status" title="${g.message(code:'project.status')}" class="${list?'':'disabled'}"/>
             <g:sortableColumn action="list" params="${params}" property="releaseDate" title="${g.message(code:'project.releaseDate.short')}" class="${list?'':'disabled'}"/>
@@ -46,7 +46,7 @@
                     </g:link>
                 </td>
                 <td>${nextProject.dealer?.name}</td>
-                <td>${nextProject.city}</td>
+                <td>${nextProject.city?.name}</td>
                 <td>${nextProject.sum}</td>
                 <td>${nextProject.status}</td>
                 <td>${nextProject.releaseDate}</td>

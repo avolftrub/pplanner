@@ -56,7 +56,7 @@
         <tr>
             <td><g:message code="project.city"/></td>
             <td>
-                <g:textField name="city" value="${project.city}" class="${hasErrors(bean: project, field: 'city', 'errors')}"/>&nbsp;*
+                <g:textField name="city" value="${project.city?.name}" class="${hasErrors(bean: project, field: 'city', 'errors')}" lookupUrl="${createLink(controller: 'project', action: 'lookupCity')}"/>&nbsp;*
                 <g:renderFieldErrors bean="${project}" field="city"/>
             </td>
         </tr>
