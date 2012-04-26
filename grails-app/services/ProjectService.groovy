@@ -7,6 +7,8 @@ import org.apache.poi.ss.usermodel.Cell
 import ru.appbio.ProjectSearchParameters
 import java.text.StringCharacterIterator
 import java.text.CharacterIterator
+import org.hibernate.criterion.Restrictions
+import org.hibernate.criterion.LikeExpression
 
 class ProjectService {
 
@@ -25,11 +27,25 @@ class ProjectService {
                 eq ("id", filter.projectId)
             }
 
-            //quick search
             if (filter.quickSearch) {
-                for (token in filter.quickSearch) {
-                    like('name', token)
+                and {
+                    for (token in filter.quickSearch) {
+                        or {
+                            'ilike'("name", '%' + escape(token, '!' as char) + '%')
+                            'ilike'("customer", '%' + escape(token, '!' as char) + '%')
+                            join('dealer')
+                            dealer {
+                                'ilike'("name", '%' + escape(token, '!' as char) + '%')
+                            }
+                            join('city')
+                            city {
+                                'ilike'("name", '%' + escape(token, '!' as char) + '%')
+                            }
+
+                        }
+                    }
                 }
+
             }
         }
     }

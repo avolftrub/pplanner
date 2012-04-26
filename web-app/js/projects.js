@@ -36,4 +36,19 @@ $(document).ready(function () {
 
     var options = { source: $("#city").attr("lookupUrl") };
     $("#city").autocomplete(options);
+
+//
+//    $("#advancedSearch").live('click', function() {
+//        $("#advancedSearchBlock").show("slow");
+//        $("#advancedSearch").toggle();
+//        $("#advancedSearchClose").toggle();
+//    });
+//
+//    $("#advancedSearchClose").live('click', function() {
+//        $("#advancedSearchBlock").hide("slow");
+//        $("#advancedSearch").toggle();
+//        $("#advancedSearchClose").toggle();
+//    });
+
+
 });

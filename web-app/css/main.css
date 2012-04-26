@@ -4,6 +4,10 @@ input, select, textarea {
 	font-family: 	Verdana,Arial,Helvetica,sans-serif;
 }
 
+div.content {
+    min-height: 300px;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	line-height: 1.1;
 }
@@ -812,8 +816,82 @@ a#changePassword {
     font-size: 15px;
 }
 
+li.quickSearch input {
+    width: 300px;
+    position: relative;
+    top: 4px;
+    -moz-border-radius: 0.2em;
+    -webkit-border-radius: 0.2em;
+    border-radius: 0.2em;
+
+    padding-left: 10px;
+
+    background: url("../images/search.png") 286px -1px no-repeat;
+}
+
+table.notFound {
+    width: 100%;
+}
+
+table.notFound div.notfoundTitle{
+    font-size: 24px;
+    margin: 15px 0 25px 0;
+}
+
+table.notFound div.NothingFoundActions{
+    font-size: 15px;
+}
+
+table.notFound tr td {
+    text-align: center;
+}
+
+/*span.advancedSearchOpen {*/
+    /*display: block;*/
+    /*font-size: 11px;*/
+    /*padding-top: 7px;*/
+    /*padding-left: 190px;*/
+/*}*/
+
+/*span.advancedSearchClose {*/
+    /*display: block;*/
+    /*font-size: 11px;*/
+    /*padding-top: 7px;*/
+    /*padding-left: 214px;*/
+/*}*/
+
+/*div#advancedSearchBlock {*/
+    /*margin-left: 20px;*/
+    /*margin-top: 40px;*/
+/*}*/
 
 
+/*.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {*/
+    /*border: 1px solid #eb8f00 !important;*/
+    /*color: #eb8f00 !important;*/
+/*}*/
+
+li.ui-menu-item {
+    /*background-color: blue;*/
+}
+
+
+a#ui-active-menu-item.ui-state-hover {
+    background-color: blue;
+}
+/*<input class="ui-autocomplete-input"/>*/
+
+/*<ul class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all">*/
+/*<li class="ui-menu-item">*/
+/*<a class="ui-corner-all">item 1</a>*/
+  /*</li>*/
+  /*<li class="ui-menu-item">*/
+/*<a class="ui-corner-all">item 2</a>*/
+  /*</li>*/
+  /*<li class="ui-menu-item">*/
+/*<a class="ui-corner-all">item 3</a>*/
+  /*</li>*/
+/*</ul>*/
 
 
 

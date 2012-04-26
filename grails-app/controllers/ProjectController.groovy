@@ -36,6 +36,18 @@ class ProjectController {
         [projects: results.list, total: results.totalCount, filter: filter]
     }
 
+    def lookup = {
+        def filter = prepareFilter(params)
+        def results = projectService.findProjects(filter)
+
+        def qsStr = new StringBuffer()
+        filter.quickSearch.each {
+            qsStr.append(it).append(" ")
+        }
+
+        render(view: 'list', model: [projects: results.list, total: results.totalCount, filter: filter, quickSearchStr: qsStr.toString().trim()])
+    }
+
     def update = {
         def project = projectService.findProjects(prepareFilter(params))[0]
         if (!project) {
