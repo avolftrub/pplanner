@@ -43,7 +43,13 @@ class ProjectController {
     def list = {
         def filter = prepareFilter(params)
         def results = projectService.findProjects(filter)
-        [projects: results.list, total: results.totalCount, filter: filter]
+
+        def qsStr = new StringBuffer()
+        filter.quickSearch.each {
+            qsStr.append(it).append(" ")
+        }
+
+        [projects: results.list, total: results.totalCount, filter: filter, quickSearchStr: qsStr.toString().trim()]
     }
 
     def lookup = {
