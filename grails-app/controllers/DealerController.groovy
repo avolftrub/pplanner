@@ -7,7 +7,7 @@ class DealerController {
     def dealerService
 
     def show = {
-        def dealer = Dealer.get(params.id)
+        def dealer = Dealer.get(params.long('id'))
         if (!dealer) {
             redirect(controller: 'dealer', action: 'list')
         }
@@ -16,7 +16,7 @@ class DealerController {
     }
 
     def edit = {
-        def dealer = Dealer.get(params.id)
+        def dealer = Dealer.get(params.long('id'))
         if (!dealer) {
             redirect(controller: 'dealer', action: 'list')
         }
@@ -32,7 +32,7 @@ class DealerController {
 
 
     def update = {
-        def dealer = Dealer.get(params.id)
+        def dealer = Dealer.get(params.long('id'))
         if (!dealer) {
             redirect(controller: 'dealer', action: 'list')
         }
@@ -63,7 +63,7 @@ class DealerController {
     }
 
     def delete = {
-        def dealer = Dealer.get(params.id)
+        def dealer = Dealer.get(params.long('id'))
         if (!dealer) {
             redirect(controller: 'dealer', action: 'list')
         }

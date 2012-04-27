@@ -57,14 +57,15 @@ class BootStrap {
 
     def bootstrapShiroRoles() {
         def roles = [
-                'admin' :['user','project','dealer'],
-                'dealer' :['project']
+                'admin' :['user','project','dealer', 'settings'],
+                'dealer' :['project', 'settings']
         ]
 
         roles.each { roleName, perms ->
             def role = ShiroRole.findByName(roleName)
             if (!role) {
                 role = new ShiroRole(name:roleName)
+                role.
                 perms.each { permission ->
                     if (permission.indexOf(':') == -1) {
                         role.addToPermissions(permission + ':*')

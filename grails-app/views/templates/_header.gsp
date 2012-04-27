@@ -4,7 +4,7 @@
     </a>
     <shiro:isLoggedIn>
         <div class="userSection">
-            <span>${user.name}</span>
+            <span><g:link controller="settings" action="showSettings" id="${user.id}">${user.name}</g:link></span>
         </div>
 
         <div class="logout">

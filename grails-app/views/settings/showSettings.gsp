@@ -12,18 +12,8 @@
 </g:if>
 <div class="actionMenu">
     <ul>
-        <shiro:hasRole name="${ShiroRole.ROLE_ADMIN}">
-            <li>
-                <g:link controller="user" class="delete deleteUserLink" action="delete" id="${user.id}" params="[actionBack: 'show']"
-                        helpertext="${message(code: 'user.delete.confirm')}">
-                    <img class="actionIcon" src="${resource(dir: 'images', file: 'delete.png')}"
-                         alt="${message(code: 'user.action.delete')}"/><g:message code="user.action.delete"/>
-                </g:link>
-            </li>
-        </shiro:hasRole>
-
         <li>
-            <g:link controller="user" action="edit" id="${user.id}">
+            <g:link controller="settings" action="editSettings" id="${user.id}">
                 <img class="actionIcon" src="${resource(dir: 'images', file: 'edit.png')}"
                      alt="${message(code: 'user.action.edit')}"/><g:message code="user.action.edit"/>
             </g:link>
@@ -32,7 +22,7 @@
 
 </div>
 
-<g:render template="showPage"/>
+<g:render template="/user/showPage"/>
 
 </body>
 </html>

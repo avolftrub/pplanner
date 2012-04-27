@@ -11,6 +11,7 @@ class UrlMappings {
             controller = "project"
             action = "list"
         }
+        "404"(view:'/404')
 		"500"(view:'/error')
 	}
 }

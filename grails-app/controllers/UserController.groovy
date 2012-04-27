@@ -5,7 +5,7 @@ class UserController {
     def userService
 
     def show = {
-        def user = User.get(params.id)
+        def user = User.get(params.long('id'))
         if (!user) {
             redirect(controller: 'user', action: 'list')
         }
@@ -14,7 +14,7 @@ class UserController {
     }
 
     def edit = {
-        def user = User.get(params.id)
+        def user = User.get(params.long('id'))
         if (!user) {
             redirect(controller: 'user', action: 'list')
         }
@@ -30,20 +30,24 @@ class UserController {
 
 
     def update = {
-        def user = User.get(params.id)
+        def user = User.get(params.long('id'))
         if (!user) {
             redirect(controller: 'user', action: 'list')
         }
 
         def isPasswordChanged = params.boolean('pwdChange')
-        log.info "XXXX: PWDCH=${isPasswordChanged}"
 
         user.properties = params
 
         user.validate()
 
-        if (isPasswordChanged && (params.password != params.password2)) {
-            user.errors.rejectValue('password', 'passwords.mismatch')
+        if (isPasswordChanged) {
+            if (params.password.trim().length() < 6) {
+                user.errors.rejectValue('password', 'password.too.short')
+            } else if (params.password != params.password2) {
+                user.errors.rejectValue('password', 'passwords.mismatch')
+                user.errors.rejectValue('password2', 'passwords.mismatch')
+            }
         }
 
         if (!user.hasErrors()) {
@@ -53,9 +57,15 @@ class UserController {
             if (user.save()) {
                 redirect(controller: 'user', action: 'show')
             } else {
+                //clear password fields
+                user.password = ''
+                user.password2 = ''
                 render(view: '/user/edit', model: [user: user, pwdChange: isPasswordChanged])
             }
         } else {
+            //clear password fields
+            user.password = ''
+            user.password2 = ''
             render(view: '/user/edit', model: [user: user, pwdChange: isPasswordChanged])
         }
     }
@@ -71,6 +81,17 @@ class UserController {
             user.role = ShiroRole.findByName(ShiroRole.ROLE_DEALER)
         }
 
+        def isPasswordChanged = params.boolean('pwdChange')
+
+        if (isPasswordChanged) {
+            if (params.password.trim().length() < 6) {
+                user.errors.rejectValue('password', 'password.too.short')
+            } else if (params.password != params.password2) {
+                user.errors.rejectValue('password', 'passwords.mismatch')
+                user.errors.rejectValue('password2', 'passwords.mismatch')
+            }
+        }
+
         user.validate()
 
         if (!user.hasErrors()) {
@@ -78,18 +99,21 @@ class UserController {
             if (user.save()) {
                 redirect(controller: 'user', action: 'show')
             } else {
+                //clear password fields
+                user.password = ''
+                user.password2 = ''
                 render(view: '/user/create', model: [user: user, isNew: true, currentUser: userService.getCurrentUser(),admin: params.boolean("admin")])
             }
         } else {
+            //clear password fields
+            user.password = ''
+            user.password2 = ''
             render(view: '/user/create', model: [user: user, isNew: true, currentUser: userService.getCurrentUser(),admin: params.boolean("admin")])
         }
     }
 
     def delete = {
-        params.each {
-            log.info "HHHH: $it"
-        }
-        def user = User.get(params.id)
+        def user = User.get(params.long('id'))
         if (!user) {
             redirect(controller: 'user', action: 'list')
         }
@@ -123,25 +147,4 @@ class UserController {
         filter.bindLimits(params)
         return filter
     }
-
-    /** Checks passwrod                   */
-    private def checkPassword(User user, params) {
-        def result = true
-        if (!user.errors.hasFieldErrors("password")) {
-            if (!params.password) {
-                user.errors.rejectValue('password', 'user.password.empty')
-                result = false
-            } else if (params.password.size() < 6) {
-                user.errors.rejectValue('password', 'user.password.short', 'Password too short')
-                result = false
-            }
-        }
-        if (params.password != params.password2) {
-            user.errors.rejectValue('password2', 'user.passwords.mismatched', 'Passwords mismatched')
-            result = false
-        }
-
-        return result
-    }
-
 }

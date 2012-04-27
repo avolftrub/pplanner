@@ -893,5 +893,16 @@ a#ui-active-menu-item.ui-state-hover {
   /*</li>*/
 /*</ul>*/
 
+div.notfound, div.exception {
+    width: 100%;
+    padding-top: 40px;
+    text-align: center;
+}
+
+div.notfound span, div.exception span {
+    display: block;
+    font-size: 15px;
+    margin: 7px 0;
+}
 
 

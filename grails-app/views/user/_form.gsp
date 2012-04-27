@@ -71,7 +71,7 @@
             <td><g:message code="user.password2"/></td>
             <td>
                 <g:passwordField autocomplete="off" name="password2" value="${user.password2}" class="w45 ${hasErrors(bean: user, field: 'password2', 'errors')}"/>&nbsp;*
-                <g:renderFieldErrors bean="${user}" field="password2"/>
+                <g:renderFieldErrors bean="${user}" field="password"/>
             </td>
         </tr>
     </table>

@@ -13,8 +13,13 @@ class ProjectController {
     def projectService
 
     def show = {
+        def projectId = params.long("id")
+        if (!projectId) {
+            redirect(controller: 'project', action: 'list')
+        }
+
         def project = projectService.findProjects(prepareFilter(params))[0]
-            if (!project) {
+        if (!project) {
             redirect(controller: 'project', action: 'list')
         }
 
@@ -22,6 +27,11 @@ class ProjectController {
     }
 
     def edit = {
+        def projectId = params.long("id")
+        if (!projectId) {
+            redirect(controller: 'project', action: 'list')
+        }
+
         def project = projectService.findProjects(prepareFilter(params))[0]
         if (!project) {
             redirect(controller: 'project', action: 'list')
@@ -49,12 +59,25 @@ class ProjectController {
     }
 
     def update = {
+        def projectId = params.long("id")
+        if (!projectId) {
+            redirect(controller: 'project', action: 'list')
+        }
+
         def project = projectService.findProjects(prepareFilter(params))[0]
         if (!project) {
             redirect(controller: 'project', action: 'list')
         }
 
         project.status = ProjectStatus.getById(params.status as Integer)
+
+        def currentUser = userService.getCurrentUser()
+        if (currentUser.isAdmin()) {
+            project.dealer = Dealer.get(params.dealer)
+        } else {
+            project.dealer = currentUser.dealer
+        }
+
         project.dealer = Dealer.get(params.dealer)
 
         if (params.city?.trim()?.length() != 0){
@@ -76,7 +99,14 @@ class ProjectController {
         def project = new Project()
 
         project.status = ProjectStatus.getById(params.status as Integer)
-        project.dealer = Dealer.get(params.dealer)
+
+        def currentUser = userService.getCurrentUser()
+        if (currentUser.isAdmin()) {
+            project.dealer = Dealer.get(params.dealer)
+        } else {
+            project.dealer = currentUser.dealer
+        }
+
         if (params.city?.trim()?.length() != 0){
             project.city = City.findByName(params.city?.trim())
         }
@@ -93,6 +123,11 @@ class ProjectController {
     }
 
     def delete = {
+        def projectId = params.long("id")
+        if (!projectId) {
+            redirect(controller: 'project', action: 'list')
+        }
+
         def project = projectService.findProjects(prepareFilter(params))[0]
         if (!project) {
             redirect(controller: 'project', action: 'list')
@@ -141,30 +176,7 @@ class ProjectController {
 
         query += " order by name "
 
-        log.error "TTTTT:Searching for cities: $query"
-        params.each {
-            log.error "HHHHH: $it"
-        }
-
         def result = City.executeQuery(query, params)
-
-        log.error "TTTTT:Found results:"
-
-        params.each {
-            log.error "HHHHH: $it"
-        }
-
-
-//        def result = projectService.findCities(terms)
-
-//        def data = []
-//        result.each {
-//            data << [it.name]
-//            data << [label: Highlighter.highlight(it.name, terms, '<strong>', '</strong>'), value: it.name]
-//        }
-
-
-
 
         render(contentType: 'text/json') {
             result.collect {it.name}
