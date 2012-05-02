@@ -43,9 +43,21 @@
     <h1><g:message code="project.action.list.title"/></h1>
     <g:if test="${total > 0}">
         <table>
+            <colgroup>
+                <col width="25%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+                <col width="5%"/>
+                <col width="10%"/>
+                <col width="10%"/>
+                <col width="5%"/>
+                <col width="5%"/>
+            </colgroup>
             <thead>
             <tr>
                 <g:sortableColumn action="list" params="${params}" property="name" title="${g.message(code:'project.name.short')}" class="${list?'':'disabled'}"/>
+                <g:sortableColumn action="list" params="${params}" property="productName" title="${g.message(code:'project.productName.short')}" class="${list?'':'disabled'}"/>
                 <g:sortableColumn action="list" params="${params}" property="dealer" title="${g.message(code:'project.dealer.short')}" class="${list?'':'disabled'}"/>
                 <g:sortableColumn action="list" params="${params}" property="customer" title="${g.message(code:'project.customer.short')}" class="${list?'':'disabled'}"/>
                 <g:sortableColumn action="list" params="${params}" property="city" title="${g.message(code:'project.city.short')}" class="${list?'':'disabled'}"/>
@@ -63,11 +75,12 @@
                             ${nextProject.name}
                         </g:link>
                     </td>
+                    <td>${nextProject.productName}</td>
                     <td>${nextProject.dealer?.name}</td>
                     <td>${nextProject.customer}</td>
                     <td>${nextProject.city?.name}</td>
-                    <td>${nextProject.sum}</td>
-                    <td>${nextProject.status}</td>
+                    <td><g:formatMoney value="${nextProject.sum}"/></td>
+                    <td><g:message code="${'project.status.' + nextProject.status.id}"/></td>
                     <td>${nextProject.releaseDate}</td>
                     <td>
                         <g:link controller="project" action="edit" id="${nextProject.id}">

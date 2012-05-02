@@ -32,6 +32,7 @@ class ProjectService {
                     for (token in filter.quickSearch) {
                         or {
                             'ilike'("name", '%' + escape(token, '!' as char) + '%')
+                            'ilike'("productName", '%' + escape(token, '!' as char) + '%')
                             'ilike'("customer", '%' + escape(token, '!' as char) + '%')
                             join('dealer')
                             dealer {

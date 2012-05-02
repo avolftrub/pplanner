@@ -37,7 +37,7 @@
     <h1>
         <span class="createDate">${message(code: 'project.date.of.creation', args: [formatPlainDate(value: project.createDate)])}</span>
         ${project.name},&nbsp;<span class="projectStatus"><g:message
-            code="${'project.status.' + project.status}"/></span>
+            code="${'project.status.' + project.status.id}"/></span>
     </h1>
 
     <table class="entityShow">
@@ -46,8 +46,16 @@
             <col width="65%">
         </colgroup>
         <tr>
+            <td><g:message code="project.productName"/></td>
+            <td>${project.productName}</td>
+        </tr>
+        <tr>
             <td><g:message code="project.dealer"/></td>
             <td>${project.dealer?.name}</td>
+        </tr>
+        <tr>
+            <td><g:message code="project.status"/></td>
+            <td><g:message code="${'project.status.' + project.status.id}"/></td>
         </tr>
         <tr>
             <td><g:message code="project.customer"/></td>
@@ -64,6 +72,10 @@
         <tr>
             <td><g:message code="project.contactPerson"/></td>
             <td>${project.contactPerson}</td>
+        </tr>
+        <tr>
+            <td><g:message code="project.contactEmail"/></td>
+            <td>${project.contactEmail}</td>
         </tr>
 
         <tr>
@@ -83,7 +95,7 @@
 
         <tr>
             <td><g:message code="project.sum"/></td>
-            <td>${project.sum}</td>
+            <td><g:formatMoney value="${project.sum}"/></td>
         </tr>
 
         <tr>

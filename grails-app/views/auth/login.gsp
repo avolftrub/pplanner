@@ -17,11 +17,11 @@
         </colgroup>
        <tbody>
         <tr>
-          <td><g:message code="login.username"/>:</td>
+          <td class="label"><g:message code="login.username"/>:</td>
           <td><input type="text" name="username" value="${username}" /></td>
         </tr>
         <tr>
-          <td><g:message code="login.password"/>:</td>
+          <td class="label"><g:message code="login.password"/>:</td>
           <td><input type="password" name="password" value="" /></td>
         </tr>
         <tr>

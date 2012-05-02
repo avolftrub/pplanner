@@ -95,7 +95,7 @@ class ProjectController {
         project.validate()
 
         if (!project.hasErrors() && project.save()) {
-            redirect(controller: 'project', action: 'show')
+            redirect(controller: 'project', action: 'show', params: [id: project.id])
         } else {
             render(view: '/project/edit', model: [project: project])
         }

@@ -10,7 +10,9 @@ class Project {
     City city
     String contactPerson
     String contactPhone
+    String contactEmail
     String name
+    String productName
     LocalDate releaseDate
     BigDecimal sum
     ProjectStatus status = ProjectStatus.INTEREST_CONFIRMED
@@ -25,7 +27,9 @@ class Project {
         department(blank: false, size:  1..1024)
         contactPerson(blank: false, size:  1..512)
         contactPhone(blank: false, size:  1..128)
+        contactEmail(blank: false, size: 1..128, email: true)
         name(blank: false, size:  1..1024)
+        productName(blank: false, size:  1..1024)
         sum(min: new BigDecimal(0))
         comments(nullable: true, size: 1..2048)
         city(nullable: true)

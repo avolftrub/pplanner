@@ -27,7 +27,7 @@
 
     <div class="buttonBlock">
         <button type="submit" class="Save"><span><g:message code="save"/></span></button>
-        <g:link action="list" class="Cancel SaveCancel"><span><g:message code="cancel"/></span></g:link>
+        <g:link action="show" id="${project.id}" class="Cancel SaveCancel"><span><g:message code="cancel"/></span></g:link>
     </div>
 </g:form>
 

@@ -5,9 +5,9 @@ public enum ProjectStatus {
     SPECIFICATION_AGREED(2),
     BUDGET_CONFIRMED(3),
     TENDER_SPECIFICATION(4),
-    TENDER(4),
-    ORDER_IN(5),
-    SHIPPED(6)
+    TENDER(5),
+    ORDER_IN(6),
+    SHIPPED(7)
 
     /**
      * Type id

@@ -4,7 +4,7 @@
     </a>
     <shiro:isLoggedIn>
         <div class="userSection">
-            <span><g:link controller="settings" action="showSettings" id="${user.id}">${user.name}</g:link></span>
+            <span><g:link controller="settings" action="showSettings" id="${user.id}">${user.name}</g:link>&nbsp;(${message(code: 'ROLE.' + user.role.name)})</span>
         </div>
 
         <div class="logout">

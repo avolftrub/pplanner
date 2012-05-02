@@ -37,6 +37,7 @@ class BootStrap {
                                 department: "Административно-хозяйственный отдел № $i",
                                 contactPerson: "Закулачный Степан Юрьевич $it",
                                 contactPhone: "+8 800 2 000 $i",
+                                contactEmail: info@customer.ru
                                 name: "Поставка масс спектрометра для детского сада № $i",
                                 releaseDate: new LocalDate().plusMonths(i),
                                 sum: new BigDecimal(Math.round(Math.random() * 300000)),

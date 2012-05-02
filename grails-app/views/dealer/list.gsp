@@ -20,6 +20,11 @@
 <div id="list-dealers" class="content scaffold-list">
     <h1><g:message code="dealer.action.list.title"/></h1>
     <table>
+        <colgroup>
+            <col width="75%">
+            <col width="20%">
+            <col width="5%">
+        </colgroup>
         <thead>
         <tr>
             <g:sortableColumn action="list" params="${params}" property="name" title="${g.message(code:'dealer.name.short')}" class="${list?'':'disabled'}"/>

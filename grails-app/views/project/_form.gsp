@@ -22,6 +22,15 @@
                 <g:renderFieldErrors bean="${project}" field="name"/>
             </td>
         </tr>
+
+        <tr>
+            <td><g:message code="project.productName"/></td>
+            <td>
+                <g:textField name="productName" value="${project.productName}" class="${hasErrors(bean: project, field: 'productName', 'errors')}"/>&nbsp;*
+                <g:renderFieldErrors bean="${project}" field="productName"/>
+            </td>
+        </tr>
+
         <tr>
             <td><g:message code="project.dealer"/></td>
             <td>
@@ -67,6 +76,13 @@
                 <g:renderFieldErrors bean="${project}" field="contactPerson"/>
             </td>
         </tr>
+        <tr>
+            <td><g:message code="project.contactEmail"/></td>
+            <td>
+                <g:textField name="contactEmail" value="${project.contactEmail}" class="${hasErrors(bean: project, field: 'contactEmail', 'errors')}"/>&nbsp;*
+                <g:renderFieldErrors bean="${project}" field="contactEmail"/>
+            </td>
+        </tr>
 
         <tr>
             <td><g:message code="project.contactPhone"/></td>
@@ -79,7 +95,7 @@
         <tr>
             <td><g:message code="project.current.status"/></td>
             <td>
-                <g:select name="status" class="w45" value="${project.status}" optionKey="id" from="${ProjectStatus.values()}"/>
+                <g:select name="status" class="w45" value="${project.status.id}" optionKey="id" from="${ProjectStatus.values()}" valueMessagePrefix="project.status"/>
                 <g:renderFieldErrors bean="${project}" field="status"/>
             </td>
         </tr>
@@ -87,7 +103,7 @@
         <tr>
             <td><g:message code="project.sum.rub"/></td>
             <td>
-                <g:textField name="sum" value="${project.sum}" class="w45 ${hasErrors(bean: project, field: 'sum', 'errors')}"/>&nbsp;*
+                <g:textField name="sum" value="${project.sum.intValue()}" class="w45 ${hasErrors(bean: project, field: 'sum', 'errors')}"/>&nbsp;*
                 <g:renderFieldErrors bean="${project}" field="sum"/>
             </td>
         </tr>

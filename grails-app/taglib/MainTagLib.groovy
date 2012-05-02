@@ -129,4 +129,9 @@ public class MainTagLib {
         }
         out << "<script type=\"text/javascript\">jQuery(document).ready(function(){setDatepickerDefaults('${lang}')});</script>"
     }
+
+    /** Formats money               */
+    def formatMoney = { attrs ->
+        out << formatNumber (number: attrs.value, type: "currency", currencyCode: "RUB")
+    }
 }

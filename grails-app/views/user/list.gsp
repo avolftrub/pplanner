@@ -28,6 +28,13 @@
 <div id="list-users" class="content scaffold-list">
     <h1><g:message code="user.action.list.title"/></h1>
     <table>
+        <colgroup>
+            <col width="25%"/>
+            <col width="20%"/>
+            <col width="20%"/>
+            <col width="30%"/>
+            <col width="5%"/>
+        </colgroup>
         <thead>
         <tr>
             <g:sortableColumn action="list" params="${params}" property="lastName" title="${g.message(code:'user.name')}" class="${list?'':'disabled'}"/>
