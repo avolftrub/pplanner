@@ -103,7 +103,7 @@
         <tr>
             <td><g:message code="project.sum.rub"/></td>
             <td>
-                <g:textField name="sum" value="${project.sum.intValue()}" class="w45 ${hasErrors(bean: project, field: 'sum', 'errors')}"/>&nbsp;*
+                <g:textField name="sum" value="${project.sum?.intValue()}" class="w45 ${hasErrors(bean: project, field: 'sum', 'errors')}"/>&nbsp;*
                 <g:renderFieldErrors bean="${project}" field="sum"/>
             </td>
         </tr>

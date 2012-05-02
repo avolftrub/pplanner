@@ -61,26 +61,27 @@ div.appHeader {
     background: url("../images/bg-header.png") repeat-x;
     display: block;
     height: 95px;
+    padding-top: 13px;
 }
 
 div.appHeader div.userSection {
     display: inline;
 }
 
-div.appHeader div.userSection span {
+div.appHeader div.userSection span.userData {
     position: relative;
     top: -5px;
 }
 
+div.appHeader div.userSection span.userData a {
+    display: inline !important;
+}
 
 div.appHeader div.logout {
-    float: right;
+    position: absolute;
+    right: 20px;
+    top: 50px;
 }
-div.appHeader div.logout a {
-    margin-top: 55px;
-    margin-right: 25px;
-}
-
 
 /* replace with .no-boxshadow body if you have modernizr available */
 .ie6 body,
@@ -121,7 +122,7 @@ img {
 /* GENERAL */
 
 div.appHeader a {
-	display: inline-block;
+	/*display: inline-block;*/
 	margin: 1em;
 }
 
@@ -658,7 +659,7 @@ img.menuIcon {
 }
 
 img.actionIcon {
-    padding-right: 10px;
+    margin-right: 10px;
     position: relative;
     top: 4px;
     width: 24px;
@@ -830,8 +831,9 @@ li.quickSearch input {
     border-radius: 0.2em;
 
     padding-left: 10px;
+    height: 25px;
 
-    background: url("../images/search.png") 286px -1px no-repeat;
+    background: url("../images/search.png") 274px -1px no-repeat;
 }
 
 table.notFound {
