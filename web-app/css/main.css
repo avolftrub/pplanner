@@ -671,7 +671,7 @@ table td {
 
 div.actionMenu {
     margin-bottom: 50px;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 div.actionMenu ul li {
@@ -830,10 +830,10 @@ li.quickSearch input {
     -webkit-border-radius: 0.2em;
     border-radius: 0.2em;
 
-    padding-left: 10px;
-    height: 25px;
+    /*padding-left: 10px;*/
+    /*height: 20px;*/
 
-    background: url("../images/search.png") 274px -1px no-repeat;
+    background: url("../images/search.png") 274px -2px no-repeat;
 }
 
 table.notFound {
