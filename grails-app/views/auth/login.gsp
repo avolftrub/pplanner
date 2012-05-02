@@ -5,20 +5,26 @@
   <title>Login</title>
 </head>
 <body>
-  <g:if test="${flash.message}">
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#username").focus();
+    });
+</script>
+
+<g:if test="${flash.message}">
     <div class="message">${flash.message}</div>
   </g:if>
   <g:form action="signIn">
     <input type="hidden" name="targetUri" value="${targetUri}" />
     <table class="loginTable">
         <colgroup>
-            <col width="20%">
-            <col width="80%">
+            <col width="39%">
+            <col width="61%">
         </colgroup>
        <tbody>
         <tr>
           <td class="label"><g:message code="login.username"/>:</td>
-          <td><input type="text" name="username" value="${username}" /></td>
+          <td><input  id="username" type="text" name="username" value="${username}" /></td>
         </tr>
         <tr>
           <td class="label"><g:message code="login.password"/>:</td>

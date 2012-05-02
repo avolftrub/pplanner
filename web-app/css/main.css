@@ -312,6 +312,10 @@ body {
     font-size: 13px;
 }
 
+body table {
+    font-size: 13px;
+}
+
 select {
 	padding: 0.2em 0.2em 0.2em 0;
 }
@@ -714,9 +718,14 @@ table.loginTable {
     margin-top: 40px;
     margin-bottom: 50px;
     border: none;
-    /*width: 500px;*/
-    margin-left: 260px;
+    width: 100%
 }
+
+table.loginTable input[type=text],table.loginTable input[type=password] {
+    width: 350px !important;
+    padding-left: 10px;
+}
+
 
 table.loginTable tr td.label {
     text-align: right;

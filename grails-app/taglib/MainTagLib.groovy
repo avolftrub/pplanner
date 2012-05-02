@@ -132,6 +132,6 @@ public class MainTagLib {
 
     /** Formats money               */
     def formatMoney = { attrs ->
-        out << formatNumber (number: attrs.value, type: "currency", currencyCode: "RUB")
+        out << formatNumber (number: attrs.value, type: "currency", currencyCode: "RUB", locale: 'ru_RU')
     }
 }
