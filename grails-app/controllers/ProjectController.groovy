@@ -5,6 +5,7 @@ import ru.appbio.SearchParameters
 import ru.appbio.ProjectSearchParameters
 import grails.converters.JSON
 import ru.appbio.utils.Highlighter
+import ru.appbio.LTProjectStatus
 
 class ProjectController {
 
@@ -157,6 +158,42 @@ class ProjectController {
 //        response.setContentLength((int) tmpExcelFile.length())
         projectService.exportToExcel(response.outputStream, filter)
         response.outputStream.flush()
+    }
+
+    def approve = {
+        def projectId = params.long("id")
+        if (!projectId) {
+            redirect(controller: 'project', action: 'list')
+        }
+
+        def project = projectService.findProjects(prepareFilter(params))[0]
+        if (!project) {
+            redirect(controller: 'project', action: 'list')
+        }
+
+        project.approvalStatus = LTProjectStatus.APPROVED
+
+        project.save()
+
+        redirect(controller: 'project', action: 'show', id:  project.id)
+    }
+
+    def reject = {
+        def projectId = params.long("id")
+        if (!projectId) {
+            redirect(controller: 'project', action: 'list')
+        }
+
+        def project = projectService.findProjects(prepareFilter(params))[0]
+        if (!project) {
+            redirect(controller: 'project', action: 'list')
+        }
+
+        project.approvalStatus = LTProjectStatus.REJECTED
+
+        project.save()
+
+        redirect(controller: 'project', action: 'show', id:  project.id)
     }
 
     def lookupCity = {

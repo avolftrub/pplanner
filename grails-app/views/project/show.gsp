@@ -29,6 +29,29 @@
                      alt="${message(code: 'project.action.add')}"/><g:message code="project.action.add"/>
             </g:link>
         </li>
+
+        <li class="actionSeparator">
+            &nbsp;
+        </li>
+
+        <shiro:hasRole name="${ShiroRole.ROLE_ADMIN}">
+            <g:if test="${project.approvalStatus == ru.appbio.LTProjectStatus.NEW}">
+                <li>
+                    <g:link controller="project" action="reject" id="${project.id}">
+                        <img class="actionIcon" src="${resource(dir: 'images', file: 'reject.png')}"
+                             alt="${message(code: 'project.reject')}"/><g:message code="project.reject"/>
+                    </g:link>
+                </li>
+
+                <li>
+                    <g:link controller="project" action="approve" id="${project.id}">
+                        <img class="actionIcon" src="${resource(dir: 'images', file: 'approve.png')}"
+                             alt="${message(code: 'project.approve')}"/><g:message code="project.approve"/>
+                    </g:link>
+                </li>
+            </g:if>
+        </shiro:hasRole>
+
     </ul>
 
 </div>
@@ -36,8 +59,8 @@
 <div class="content show">
     <h1>
         <span class="createDate">${message(code: 'project.date.of.creation', args: [formatPlainDate(value: project.createDate)])}</span>
-        ${project.name},&nbsp;<span class="projectStatus"><g:message
-            code="${'project.status.' + project.status.id}"/></span>
+        ${project.name},&nbsp;<span class="projectStatus st${project.approvalStatus.id}"><g:message
+            code="${'project.status.lt.' + project.approvalStatus.id}"/></span>
     </h1>
 
     <table class="entityShow">
@@ -60,6 +83,14 @@
         <tr>
             <td><g:message code="project.customer"/></td>
             <td>${project.customer}</td>
+        </tr>
+        <tr>
+            <td><g:message code="project.customerName"/></td>
+            <td>${project.customerName}</td>
+        </tr>
+        <tr>
+            <td><g:message code="project.customer.inn"/></td>
+            <td>${project.inn}</td>
         </tr>
         <tr>
             <td><g:message code="project.department"/></td>

@@ -56,6 +56,20 @@
             </td>
         </tr>
         <tr>
+            <td><g:message code="project.customerName"/></td>
+            <td>
+                <g:textField name="customerName" value="${project.customerName}" class="${hasErrors(bean: project, field: 'customerName', 'errors')}"/>&nbsp;*
+                <g:renderFieldErrors bean="${project}" field="customerName"/>
+            </td>
+        </tr>
+        <tr>
+            <td><g:message code="project.customer.inn"/></td>
+            <td>
+                <g:textField name="inn" value="${project.inn}" class="${hasErrors(bean: project, field: 'inn', 'errors')}"/>&nbsp;*
+                <g:renderFieldErrors bean="${project}" field="inn"/>
+            </td>
+        </tr>
+        <tr>
             <td><g:message code="project.department"/></td>
             <td>
                 <g:textField name="department" value="${project.department}" class="${hasErrors(bean: project, field: 'department', 'errors')}"/>&nbsp;*

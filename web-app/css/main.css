@@ -710,8 +710,19 @@ table.entityEdit input, table.entityEdit textarea {
 }
 
 span.projectStatus {
-    color: #666666;
     font-size: 18px;
+}
+
+span.projectStatus.st1 {
+    color: #666666;
+}
+
+span.projectStatus.st2 {
+    color: #0000FF;
+}
+
+span.projectStatus.st3 {
+    color: #FF0000;
 }
 
 table.loginTable {
@@ -919,6 +930,10 @@ div.notfound span, div.exception span {
     display: block;
     font-size: 15px;
     margin: 7px 0;
+}
+
+li.actionSeparator {
+    padding-right: 70px !important;
 }
 
 

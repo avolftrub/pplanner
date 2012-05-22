@@ -1,11 +1,14 @@
 import org.joda.time.LocalDate
 import ru.appbio.ProjectStatus
 import City
+import ru.appbio.LTProjectStatus
 
 class Project {
 
     LocalDate createDate = new LocalDate()
     String customer
+    String customerName
+    String inn
     String department
     City city
     String contactPerson
@@ -16,6 +19,8 @@ class Project {
     LocalDate releaseDate
     BigDecimal sum
     ProjectStatus status = ProjectStatus.INTEREST_CONFIRMED
+
+    LTProjectStatus approvalStatus = LTProjectStatus.NEW
     String comments
     LocalDate closeDate
 
@@ -24,6 +29,8 @@ class Project {
 
     static constraints = {
         customer(blank: false, size:  1..1024)
+        customerName(blank: false, size:  1..1024)
+        inn(blank: false, matches: '([0-9]{10}|[0-9]{12})')
         department(blank: false, size:  1..1024)
         contactPerson(blank: false, size:  1..512)
         contactPhone(blank: false, size:  1..128)
