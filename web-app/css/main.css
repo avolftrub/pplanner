@@ -673,6 +673,10 @@ table td {
     color: #525252;
 }
 
+table td.centered {
+    text-align: center;
+}
+
 div.actionMenu {
     margin-bottom: 50px;
     margin-top: 15px;

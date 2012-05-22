@@ -34,6 +34,7 @@ class ProjectService {
                             'ilike'("name", '%' + escape(token, '!' as char) + '%')
                             'ilike'("productName", '%' + escape(token, '!' as char) + '%')
                             'ilike'("customer", '%' + escape(token, '!' as char) + '%')
+                            'ilike'("inn", '%' + escape(token, '!' as char) + '%')
                             join('dealer')
                             dealer {
                                 'ilike'("name", '%' + escape(token, '!' as char) + '%')

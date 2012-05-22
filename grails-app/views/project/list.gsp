@@ -53,6 +53,7 @@
                 <col width="10%"/>
                 <col width="5%"/>
                 <col width="5%"/>
+                <col width="5%"/>
             </colgroup>
             <thead>
             <tr>
@@ -63,6 +64,7 @@
                 <g:sortableColumn action="list" params="${params}" property="city" title="${g.message(code:'project.city.short')}" class="${list?'':'disabled'}"/>
                 <g:sortableColumn action="list" params="${params}" property="sum" title="${g.message(code:'project.sum.short')}" class="${list?'':'disabled'}"/>
                 <g:sortableColumn action="list" params="${params}" property="status" title="${g.message(code:'project.status')}" class="${list?'':'disabled'}"/>
+                <g:sortableColumn action="list" params="${params}" property="approvalStatus" title="${g.message(code:'project.approvalStatus')}" class="${list?'':'disabled'}"/>
                 <g:sortableColumn action="list" params="${params}" property="releaseDate" title="${g.message(code:'project.releaseDate.short')}" class="${list?'':'disabled'}"/>
                 <th></th>
             </tr>
@@ -77,10 +79,16 @@
                     </td>
                     <td>${nextProject.productName}</td>
                     <td>${nextProject.dealer?.name}</td>
-                    <td>${nextProject.customer}</td>
+                    <td>
+                        ${nextProject.customer}<br/>
+                        (<g:message code="project.customer.inn.short"/>:&nbsp;${nextProject.inn})
+                    </td>
                     <td>${nextProject.city?.name}</td>
                     <td><g:formatMoney value="${nextProject.sum}"/></td>
                     <td><g:message code="${'project.status.' + nextProject.status.id}"/></td>
+                    <td class="centered">
+                        <img class="actionIcon" width="24" src="${resource(dir: 'images', file: 'lt_status_' + nextProject.approvalStatus.id + '.png')}" alt="${message(code: 'project.status.lt.' + nextProject.approvalStatus.id)}" title="${message(code: 'project.status.lt.' + nextProject.approvalStatus.id)}"/>
+                    </td>
                     <td>${nextProject.releaseDate}</td>
                     <td>
                         <g:link controller="project" action="edit" id="${nextProject.id}">
