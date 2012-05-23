@@ -49,6 +49,23 @@ $(document).ready(function () {
 //        $("#advancedSearch").toggle();
 //        $("#advancedSearchClose").toggle();
 //    });
+    $(".addCommment").click(function () {
+        var template = $(".CommentTemplate");
+        $(".noComments").hide();
+        template.show('fast');
+        return false;
+    });
 
+    $(".cancelComment").click(function () {
+        var template = $(".CommentTemplate");
+        $(".CommentTemplate > form > textarea").val("");
+        template.hide('fast');
+        $(".noComments").show();
+        return false;
+    });
+
+    $(".deleteCommentLink").live('click', function() {
+        return confirm($(this).attr('helpertext'));
+    })
 
 });

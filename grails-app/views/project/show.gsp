@@ -133,10 +133,59 @@
             <td><g:message code="project.comments"/></td>
             <td>${project.comments}</td>
         </tr>
-
-
     </table>
 
+    <h1>
+        <g:message code="comments.header"/>
+        <span class="commentAddBlock"><a class="addCommment" href=#>
+            <img class="commentIcon" src="${resource(dir: 'images', file: 'add_comment.png')}" alt="${message(code: 'comments.add')}"/>${message(code: 'comments.add')}</a>
+        </span>
+    </h1>
+    <div class="CommentForm CommentTemplate" style="display: none;">
+        <g:form controller="project" action="addComment" method="POST">
+            <g:hiddenField name="projectId" value="${project.id}"/>
+            <g:textArea name="text" rows="4" cols="50"/>
+            <br/>
+            <g:submitButton name="${message(code: 'comments.add')}"/>
+            <a href="#" class="cancelComment"><g:message code="cancel"/></a>
+        </g:form>
+    </div>
+    <g:if test="${project.userComments?.size() == 0 }">
+        <p class="noComments">
+            <g:message code="no.comments"/>
+            <a class="addCommment" href=#>
+                ${message(code: 'comments.add')}
+            </a>
+        </p>
+    </g:if>
+    <g:else>
+        <div id="commentsList">
+            <g:each in="${project.userComments}" var="nextComment">
+                <p>
+                    <span class="commentTitle"><g:formatPlainDate value="${nextComment.createDate}"/>&nbsp;
+                        <g:if test="${nextComment.author == currentUser}">
+                            <g:link controller="settings" action="showSettings">${nextComment.author.name}</g:link>
+                        </g:if>
+                        <g:else>
+                            <shiro:hasRole name="${ShiroRole.ROLE_ADMIN}">
+                                <g:link controller="user" action="show" id="${nextComment.author.id}">${nextComment.author.name}</g:link>
+                            </shiro:hasRole>
+                            <shiro:hasRole name="${ShiroRole.ROLE_DEALER}">
+                                ${nextComment.author.name}
+                            </shiro:hasRole>
+                        </g:else>
+                        (${message(code: 'ROLE.' + nextComment.author.role.name)})
+                        <g:if test="${nextComment.author == currentUser}">
+                            <g:link controller="project" class="deleteCommentLink" action="deleteComment" id="${nextComment.id}" params="${[projectId: project.id]}" helpertext="${message(code: 'comment.delete.confirmation')}"><g:message code="delete"/></g:link>
+                        </g:if>
+                    </span>
+                    <span class="commentBody">
+                        ${nextComment.text}
+                    </span>
+                </p>
+            </g:each>
+        </div>
+    </g:else>
 </div>
 </body>
 </html>

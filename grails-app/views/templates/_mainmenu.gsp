@@ -3,7 +3,7 @@
         <shiro:authenticated>
             <shiro:user>
                 <li class="settings">
-                    <g:link controller="settings" action="showSettings" id="${user.id}">
+                    <g:link controller="settings" action="showSettings">
                         <img class="menuIcon" src="${resource(dir: 'images', file: 'settings.png')}" alt="Grails"/>
                         <g:message code="section.settings"/>
                     </g:link>

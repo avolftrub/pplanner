@@ -669,6 +669,13 @@ img.actionIcon {
     width: 24px;
 }
 
+img.commentIcon {
+    width: 52px;
+    margin-right: 5px;
+    position: relative;
+    top: 20px;
+}
+
 table td {
     color: #525252;
 }
@@ -839,7 +846,7 @@ div.actionMenu a {
 }
 
 input[type="submit"]:hover {
-    background-color: yellow;
+    background-color: #DDDDDD;
 }
 
 a#changePassword {
@@ -938,6 +945,61 @@ div.notfound span, div.exception span {
 
 li.actionSeparator {
     padding-right: 70px !important;
+}
+
+span.commentAddBlock {
+    position: absolute;
+    left: 720px;
+    font-size: 13px;
+}
+
+span.commentAddBlock a {
+    position: relative;
+    top: -30px;
+}
+
+div.CommentForm {
+    padding: 20px;
+}
+
+div.CommentForm textarea {
+    width: 600px;
+    margin-bottom: 20px;
+}
+
+div.CommentForm input[type=submit] {
+    width: 200px;
+}
+
+
+div.CommentForm a.cancelComment {
+    padding-left: 10px;
+}
+
+p.noComments {
+    font-size: 15px;
+    margin-bottom: 80px;
+    padding-left: 30px;
+    padding-top: 10px;
+}
+
+span.commentTitle {
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: block;
+}
+
+span.commentBody {
+    display: block;
+    padding-left: 30px;
+    color: #555555;
+    padding-bottom: 15px;
+}
+
+a.deleteCommentLink {
+    color: red;
+    padding-left: 10px;
 }
 
 

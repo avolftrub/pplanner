@@ -24,8 +24,11 @@ class Project {
     String comments
     LocalDate closeDate
 
+    List userComments
+
     static belongsTo = [dealer: Dealer]
 
+    static hasMany = [userComments: Comment]
 
     static constraints = {
         customer(blank: false, size:  1..1024)

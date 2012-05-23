@@ -24,7 +24,7 @@ class ProjectController {
             redirect(controller: 'project', action: 'list')
         }
 
-        [project: project]
+        [project: project, currentUser: userService.getCurrentUser()]
     }
 
     def edit = {
@@ -192,6 +192,55 @@ class ProjectController {
         project.approvalStatus = LTProjectStatus.REJECTED
 
         project.save()
+
+        redirect(controller: 'project', action: 'show', id:  project.id)
+    }
+
+    def addComment = {
+        def projectId = params.long("projectId")
+        if (!projectId) {
+            redirect(controller: 'project', action: 'list')
+        }
+
+        def project = projectService.findProjects(prepareFilter(params))[0]
+        if (!project) {
+            redirect(controller: 'project', action: 'list')
+        }
+
+        def commentInstance = new Comment(params)
+        commentInstance.author = userService.getCurrentUser()
+        commentInstance.createDate = new LocalDate()
+        project.addToUserComments(commentInstance)
+
+        project.save()
+
+        redirect(controller: 'project', action: 'show', id:  project.id)
+    }
+
+    def deleteComment = {
+        def projectId = params.long("projectId")
+        if (!projectId) {
+            redirect(controller: 'project', action: 'list')
+        }
+
+        def project = projectService.findProjects(prepareFilter(params))[0]
+        if (!project) {
+            redirect(controller: 'project', action: 'list')
+        }
+
+        def commentId = params.long("id")
+
+        if (!commentId) {
+            redirect(controller: 'project', action: 'list')
+        }
+
+        def commentInstance = Comment.get(commentId)
+        if (!commentInstance || commentInstance.author != userService.currentUser) {
+            redirect(controller: 'project', action: 'list')
+        } else {
+            project.removeFromUserComments(commentInstance)
+            project.save()
+        }
 
         redirect(controller: 'project', action: 'show', id:  project.id)
     }
