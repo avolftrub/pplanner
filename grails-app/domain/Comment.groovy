@@ -8,6 +8,10 @@ class Comment {
     static belongsTo = Project
 
     static constraints = {
-        text(blank: false, size:  1..4096)
+        text(blank: false)
+    }
+
+    static mapping = {
+        text(type: 'text')
     }
 }

@@ -993,6 +993,7 @@ span.commentTitle {
 span.commentBody {
     display: block;
     padding-left: 30px;
+    padding-right: 30px;
     color: #555555;
     padding-bottom: 15px;
 }
