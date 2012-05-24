@@ -13,8 +13,8 @@ class BootStrap {
             production {
 
 //                if (User.count ==0) {
-//                    def dealer1 = new Dealer(name: "ООО Агентство Химэксперт", code: "XX9812R").save(failOnError: true)
-//                    def dealer2 = new Dealer(name: "\"TOO \"ZALMA Ltd.\" (ЦАЛМА Лтд)", code: "BB02S18").save(failOnError: true)
+//                    def dealer1 = new Dealer(name: "ООО Агентство Химэксперт").save(failOnError: true)
+//                    def dealer2 = new Dealer(name: "\"TOO \"ZALMA Ltd.\" (ЦАЛМА Лтд)").save(failOnError: true)
                 if (User.count ==0) {
                     new User(username: "artem.volftrub@gmail.com",
                             password: new Sha512Hash('password').toHex(), password2: new Sha512Hash('password').toHex(),
