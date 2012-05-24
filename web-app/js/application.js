@@ -13,4 +13,10 @@ if (typeof jQuery !== 'undefined') {
         return true;
     });
 
+    $(".closeFlash").click(function () {
+        $(".flashMessage").hide('fast');
+        return false;
+    });
 }
+
+

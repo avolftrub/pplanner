@@ -26,9 +26,11 @@ class Project {
 
     List userComments
 
+    List documents
+
     static belongsTo = [dealer: Dealer]
 
-    static hasMany = [userComments: Comment]
+    static hasMany = [userComments: Comment, documents: Document]
 
     static constraints = {
         customer(blank: false, size:  1..1024)

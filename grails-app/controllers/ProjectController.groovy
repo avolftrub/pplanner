@@ -6,12 +6,15 @@ import ru.appbio.ProjectSearchParameters
 import grails.converters.JSON
 import ru.appbio.utils.Highlighter
 import ru.appbio.LTProjectStatus
+import org.springframework.web.multipart.MultipartHttpServletRequest
 
 class ProjectController {
 
     def userService
 
     def projectService
+
+    def documentService
 
     def show = {
         def projectId = params.long("id")
@@ -243,6 +246,70 @@ class ProjectController {
         }
 
         redirect(controller: 'project', action: 'show', id:  project.id)
+    }
+
+    /** Uploads document */
+    def uploadDocument = {
+        def projectId = params.long("projectId")
+        if (!projectId) {
+            redirect(controller: 'project', action: 'list')
+        }
+
+        def project = projectService.findProjects(prepareFilter(params))[0]
+        if (!project) {
+            redirect(controller: 'project', action: 'list')
+        }
+
+        def file = request instanceof MultipartHttpServletRequest ? request.getFile('file') : null
+        if (file.size > 0) {
+            Document.withTransaction { status ->
+                def doc = new Document(params)
+
+                if (file) {
+                    doc.contentType = file.contentType
+                }
+
+                doc.validate()
+                project.addToDocuments(doc)
+
+                if (!doc.hasErrors() && project.save(flush: true)) {
+                    if (!documentService.saveDocument(doc, file)) {
+
+                        doc.errors.rejectValue('sourceFileName', 'Document.file.upload.error')
+                        status.setRollbackOnly()
+                        flash.message = message (code: 'Document.file.upload.error')
+                        redirect(controller: 'project', action: 'show', id:  project.id)
+                    } else {
+                        redirect(controller: 'project', action: 'show', id:  project.id)
+                    }
+                } else {
+                    status.setRollbackOnly()
+                    flash.message = message (code: 'Document.file.upload.error')
+                    redirect(controller: 'project', action: 'show', id:  project.id)
+                }
+            }
+        } else {
+            flash.message = message(code: 'upload.file.empty')
+            redirect(controller: 'project', action: 'show', id:  project.id)
+        }
+    }
+
+    /** Download specified document       */
+    def downloadDocument = {
+        def document = Document.get(params.id)
+        if (document) {
+            def docFile = documentService.getDocumentFile(document)
+            if (document.contentType) {
+                response.setContentType(document.contentType)
+            }
+            response.setHeader("Content-disposition", "attachment;filename*=UTF-8''${document.sourceFileName.encodeAsURL()}")
+            response.setContentLength((int) docFile.length())
+            response.outputStream << docFile.newInputStream()
+            response.outputStream.flush()
+            return null
+        } else {
+            response.sendError(404)
+        }
     }
 
     def lookupCity = {

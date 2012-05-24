@@ -66,9 +66,11 @@ security.shiro.authc.required = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+        document.upload.dir = '/var/pplanner/documents'
     }
     production {
         grails.logging.jul.usebridge = false
+        document.upload.dir = '/home/sites/d20071461-1/documents/'
         // TODO: grails.serverURL = "http://www.changeme.com"
     }
 }

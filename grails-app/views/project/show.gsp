@@ -133,6 +133,30 @@
             <td><g:message code="project.comments"/></td>
             <td>${project.comments}</td>
         </tr>
+
+        <tr>
+            <td><g:message code="project.uploaded.docs"/></td>
+            <td>
+                <g:each in="${project.documents}" var="nextDoc">
+                    <span>
+                        <g:link controller="project" action="downloadDocument" id="${nextDoc.id}">${nextDoc.sourceFileName}</g:link>
+                    </span>
+                    <br/>
+                </g:each>
+                <g:if test="${project.documents?.size() > 0}">
+                    <br/>
+                </g:if>
+                <a href="#" class="addDocumentLink"><img class="" src="${resource(dir: 'images', file: 'plus.gif')}" alt="${message(code: 'project.document.upload.link')}"/><g:message code="project.document.upload.link"/></a>
+                <div class="uploadDocumentForm" style="display: none;">
+                    <g:form method="post" action="uploadDocument" controller="project" enctype="multipart/form-data">
+                        <g:hiddenField name="projectId" value="${project.id}"/>
+                        <g:hiddenField name="name" value="testDoc"/>
+                        <input type="file" name="file" value="Загрузить"/>
+                        <g:submitButton class="uploadDocBtn" name="upload" value="${message(code: 'project.document.upload.button')}"/><a class="cancelUpload" href="#"><g:message code="cancel"/></a>
+                    </g:form>
+                </div>
+            </td>
+        </tr>
     </table>
 
     <h1>

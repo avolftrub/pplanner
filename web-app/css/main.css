@@ -301,7 +301,7 @@ label {
 	margin: 0 0.25em 0 0;
 }
 
-input, select, textarea {
+input[type=text], select, textarea {
 	background-color: #fcfcfc;
 	border: 1px solid #AAAAAA;
 	font-size: 13px;
@@ -845,10 +845,6 @@ div.actionMenu a {
     outline: none;
 }
 
-input[type="submit"]:hover {
-    background-color: #DDDDDD;
-}
-
 a#changePassword {
     font-size: 15px;
 }
@@ -1001,6 +997,44 @@ span.commentBody {
 a.deleteCommentLink {
     color: red;
     padding-left: 10px;
+}
+
+a.addDocumentLink {
+    padding-top: 10px;
+}
+
+a.addDocumentLink img {
+    padding-right: 5px;
+    position: relative;
+    top: 4px;
+}
+
+input {
+    font-size: 12px;
+}
+
+.uploadDocBtn {
+    margin-left: 30px;
+    margin-right: 10px;
+    width:110px;
+}
+
+span.flashMessage {
+    background-color: #00EE90;
+    border: 1px solid black;
+    font-size: 15px;
+    height: 35px;
+    left: 40%;
+    padding-top: 15px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 350px;
+}
+
+span.flashMessage a.closeFlash {
+    float: right;
+    margin: 3px 5px 0 0;
 }
 
 

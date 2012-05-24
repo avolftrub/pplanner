@@ -68,4 +68,15 @@ $(document).ready(function () {
         return confirm($(this).attr('helpertext'));
     })
 
+    $(".addDocumentLink").click(function () {
+        $(".addDocumentLink").hide();
+        $(".uploadDocumentForm").show('fast');
+        return false;
+    });
+
+    $(".cancelUpload").click(function () {
+        $(".uploadDocumentForm").hide();
+        $(".addDocumentLink").show();
+        return false;
+    });
 });
