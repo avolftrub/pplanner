@@ -44,11 +44,6 @@
         <td><g:message code="dealer.name.short"/></td>
         <td>${dealer.name}</td>
     </tr>
-    <tr>
-        <td><g:message code="dealer.code.short"/></td>
-        <td>${dealer.code}</td>
-    </tr>
-
 </table>
 
 </div>

@@ -22,14 +22,6 @@
                 <g:renderFieldErrors bean="${dealer}" field="name"/>
             </td>
         </tr>
-        <tr>
-            <td><g:message code="dealer.code"/></td>
-            <td>
-                <g:textField name="code" value="${dealer.code}" class="${hasErrors(bean: dealer, field: 'code', 'errors')}"/>
-                <g:renderFieldErrors bean="${dealer}" field="code"/>
-            </td>
-        </tr>
-
     </table>
 
 </div>

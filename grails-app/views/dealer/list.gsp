@@ -21,14 +21,12 @@
     <h1><g:message code="dealer.action.list.title"/></h1>
     <table>
         <colgroup>
-            <col width="75%">
-            <col width="20%">
+            <col width="95%">
             <col width="5%">
         </colgroup>
         <thead>
         <tr>
             <g:sortableColumn action="list" params="${params}" property="name" title="${g.message(code:'dealer.name.short')}" class="${list?'':'disabled'}"/>
-            <g:sortableColumn action="list" params="${params}" property="code" title="${g.message(code:'dealer.code.short')}" class="${list?'':'disabled'}"/>
             <th></th>
         </tr>
         </thead>
@@ -40,7 +38,6 @@
                         ${nextDealer.name}
                     </g:link>
                 </td>
-                <td>${nextDealer.code}</td>
                 <td>
                     <g:link controller="dealer" action="edit" id="${nextDealer.id}">
                         <img class="actionIcon" src="${resource(dir: 'images', file: 'edit.png')}" alt="${message(code: 'dealer.action.edit')}"/>
