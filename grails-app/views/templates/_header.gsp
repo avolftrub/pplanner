@@ -14,7 +14,17 @@
     </shiro:isLoggedIn>
 
     <span class="flashMessage" style="display: ${flash.message ? '' : 'none'};">
-        ${flash.message}
-        <a href="#" class="closeFlash"><img class="" src="${resource(dir: 'images', file: 'remove_button.png')}" alt="${message(code: 'project.document.upload.link')}"/></a>
+        <table>
+            <colgroup>
+                <col width="95%">
+                <col width="5%">
+            </colgroup>
+            <tr>
+                <td>${flash.message}</td>
+                <td align="right">
+                    <a href="#" class="closeFlash"><img class="" src="${resource(dir: 'images', file: 'remove_button.png')}" alt="${message(code: 'close')}"/></a>
+                </td>
+            </tr>
+        </table>
     </span>
 </div>

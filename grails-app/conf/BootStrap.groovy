@@ -58,24 +58,33 @@ class BootStrap {
 
     def bootstrapShiroRoles() {
         def roles = [
-                'admin' :['user','project','dealer', 'settings'],
-                'dealer' :['project', 'settings']
+                'admin' :['user','project:list,show,approve,reject,addComment,deleteComment,downloadDocument,exportToExcel','dealer', 'settings'],
+                'dealer' :['project:list,show,create,save,update,edit,delete,addComment,deleteComment,uploadDocument,downloadDocument,exportToExcel,lookupCity,lookup', 'settings']
         ]
 
         roles.each { roleName, perms ->
             def role = ShiroRole.findByName(roleName)
-            if (!role) {
-                role = new ShiroRole(name:roleName)
-                role.
-                perms.each { permission ->
-                    if (permission.indexOf(':') == -1) {
-                        role.addToPermissions(permission + ':*')
-                    } else {
-                        role.addToPermissions(permission)
-                    }
+            perms.each { permission ->
+                if (permission.indexOf(':') == -1) {
+                    role.addToPermissions(permission + ':*')
+                } else {
+                    role.addToPermissions(permission)
                 }
-                role.save(failOnError:true, flush: true)
             }
+            role.save(failOnError:true, flush: true)
+
+//            if (!role) {
+//                role = new ShiroRole(name:roleName)
+//                perms.each { permission ->
+//                    if (permission.indexOf(':') == -1) {
+//                        role.addToPermissions(permission + ':*')
+//                    } else {
+//                        role.addToPermissions(permission)
+//                    }
+//                }
+//                role.save(failOnError:true, flush: true)
+//            }
+
         }
     }
 

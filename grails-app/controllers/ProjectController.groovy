@@ -145,6 +145,7 @@ class ProjectController {
 
         project.delete()
 
+        flash.message = message(code: 'project.deleted', args: [project.name])
         redirect(controller: 'project', action: 'list')
     }
 

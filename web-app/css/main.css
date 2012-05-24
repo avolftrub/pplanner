@@ -768,8 +768,12 @@ table.loginTable input.rememberme {
     margin-right: 7px;
 }
 
-table.loginTable input[type=text], table.loginTable input[type=password] {
+table.loginTable input {
     width: 300px;
+}
+
+table.loginTable input#remme {
+    width: auto;
 }
 
 .calendatInputWrapper {
@@ -1023,9 +1027,9 @@ span.flashMessage {
     background-color: #00EE90;
     border: 1px solid black;
     font-size: 15px;
-    height: 35px;
+    height: auto;
     left: 40%;
-    padding-top: 15px;
+    padding: 5px 0;
     position: absolute;
     text-align: center;
     top: 0;
@@ -1033,8 +1037,24 @@ span.flashMessage {
 }
 
 span.flashMessage a.closeFlash {
-    float: right;
-    margin: 3px 5px 0 0;
+    position: relative;
+    top: 2px;
+    /*right: -20px;*/
+    margin: 0;
 }
+span.flashMessage table {
+    border: none !important;
+    padding: 0;
+    margin: 0;
+}
+
+span.flashMessage table td {
+    border: none !important;
+    padding: 5px 10px;
+    margin: 0;
+    vertical-align: middle;
+
+}
+
 
 
