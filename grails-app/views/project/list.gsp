@@ -15,11 +15,13 @@
             </g:link>
         </li>
 
-        <li>
-            <g:link controller="project" action="create">
-                <img class="actionIcon" src="${resource(dir: 'images', file: 'add.png')}" alt="${message(code: 'project.action.add')}"/><g:message code="project.action.add"/>
-            </g:link>
-        </li>
+        <shiro:hasRole name="${ShiroRole.ROLE_DEALER}">
+            <li>
+                <g:link controller="project" action="create">
+                    <img class="actionIcon" src="${resource(dir: 'images', file: 'add.png')}" alt="${message(code: 'project.action.add')}"/><g:message code="project.action.add"/>
+                </g:link>
+            </li>
+        </shiro:hasRole>
 
         <li class="quickSearch">
             <g:form controller="project" action="lookup" method="GET">

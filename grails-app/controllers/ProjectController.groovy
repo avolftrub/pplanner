@@ -246,6 +246,7 @@ class ProjectController {
             project.save()
         }
 
+        flash.message = message(code: 'comment.deleted')
         redirect(controller: 'project', action: 'show', id:  project.id)
     }
 

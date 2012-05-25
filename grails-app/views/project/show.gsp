@@ -9,30 +9,28 @@
 <body>
 <div class="actionMenu">
     <ul>
-        <li>
-            <g:link controller="project" class="delete deleteProjectLink" action="delete" id="${project.id}" helpertext="${message(code: 'project.delete.confirm')}">
-                <img class="actionIcon" src="${resource(dir: 'images', file: 'delete.png')}"
-                     alt="${message(code: 'project.action.delete')}"/><g:message code="project.action.delete"/>
-            </g:link>
-        </li>
+        <shiro:hasRole name="${ShiroRole.ROLE_DEALER}">
+            <li>
+                <g:link controller="project" class="delete deleteProjectLink" action="delete" id="${project.id}" helpertext="${message(code: 'project.delete.confirm')}">
+                    <img class="actionIcon" src="${resource(dir: 'images', file: 'delete.png')}"
+                         alt="${message(code: 'project.action.delete')}"/><g:message code="project.action.delete"/>
+                </g:link>
+            </li>
 
-        <li>
-            <g:link controller="project" action="edit" id="${project.id}">
-                <img class="actionIcon" src="${resource(dir: 'images', file: 'edit.png')}"
-                     alt="${message(code: 'project.action.edit')}"/><g:message code="project.action.edit"/>
-            </g:link>
-        </li>
+            <li>
+                <g:link controller="project" action="edit" id="${project.id}">
+                    <img class="actionIcon" src="${resource(dir: 'images', file: 'edit.png')}"
+                         alt="${message(code: 'project.action.edit')}"/><g:message code="project.action.edit"/>
+                </g:link>
+            </li>
 
-        <li>
-            <g:link controller="project" action="create">
-                <img class="actionIcon" src="${resource(dir: 'images', file: 'add.png')}"
-                     alt="${message(code: 'project.action.add')}"/><g:message code="project.action.add"/>
-            </g:link>
-        </li>
-
-        <li class="actionSeparator">
-            &nbsp;
-        </li>
+            <li>
+                <g:link controller="project" action="create">
+                    <img class="actionIcon" src="${resource(dir: 'images', file: 'add.png')}"
+                         alt="${message(code: 'project.action.add')}"/><g:message code="project.action.add"/>
+                </g:link>
+            </li>
+        </shiro:hasRole>
 
         <shiro:hasRole name="${ShiroRole.ROLE_ADMIN}">
             <g:if test="${project.approvalStatus == ru.appbio.LTProjectStatus.NEW}">
