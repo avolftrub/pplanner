@@ -1,6 +1,6 @@
 <div class="content show">
     <h1>
-        <span class="createDate">${message(code: 'user.date.of.creation', args: [formatPlainDate(value: user.createDate)])}</span>
+        <span class="createDate">${message(code: 'user.date.of.creation', args: [formatDate(format: 'dd-MM-yyyy HH:mm', date: user.dateCreated)])}</span>
         ${user.name}
     </h1>
 

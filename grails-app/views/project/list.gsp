@@ -44,15 +44,16 @@
 <div id="list-projects" class="content scaffold-list" role="main">
     <h1><g:message code="project.action.list.title"/></h1>
     <g:if test="${total > 0}">
-        <table>
+        <table class="projectsTable">
             <colgroup>
                 <col width="25%"/>
-                <col width="15%"/>
-                <col width="15%"/>
-                <col width="15%"/>
                 <col width="5%"/>
                 <col width="10%"/>
-                <col width="10%"/>
+                <col width="12%"/>
+                <col width="12%"/>
+                <col width="8%"/>
+                <col width="8%"/>
+                <col width="5%"/>
                 <col width="5%"/>
                 <col width="5%"/>
                 <col width="5%"/>
@@ -60,6 +61,7 @@
             <thead>
             <tr>
                 <g:sortableColumn action="list" params="${params}" property="name" title="${g.message(code:'project.name.short')}" class="${list?'':'disabled'}"/>
+                <g:sortableColumn action="list" params="${params}" property="lastUpdated" title="${g.message(code:'project.updated.short')}" class="${list?'':'disabled'}"/>
                 <g:sortableColumn action="list" params="${params}" property="productName" title="${g.message(code:'project.productName.short')}" class="${list?'':'disabled'}"/>
                 <g:sortableColumn action="list" params="${params}" property="dealer" title="${g.message(code:'project.dealer.short')}" class="${list?'':'disabled'}"/>
                 <g:sortableColumn action="list" params="${params}" property="customer" title="${g.message(code:'project.customer.short')}" class="${list?'':'disabled'}"/>
@@ -79,6 +81,7 @@
                             ${nextProject.name}
                         </g:link>
                     </td>
+                    <td>${formatDate(format: 'dd-MM-yyyy HH:mm', date: nextProject.lastUpdated)}</td>
                     <td>${nextProject.productName}</td>
                     <td>${nextProject.dealer?.name}</td>
                     <td>

@@ -1,7 +1,7 @@
 import org.joda.time.LocalDate
 
 class User {
-    LocalDate createDate = new LocalDate()
+    Date dateCreated
     String username
     String password
     String password2

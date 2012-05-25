@@ -4,8 +4,8 @@ import City
 import ru.appbio.LTProjectStatus
 
 class Project {
-
-    LocalDate createDate = new LocalDate()
+    Date dateCreated
+    Date lastUpdated
     String customer
     String customerName
     String inn

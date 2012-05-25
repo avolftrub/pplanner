@@ -31,7 +31,7 @@
 
 <div class="content show">
     <h1>
-        <span class="createDate">${message(code: 'dealer.date.of.creation', args: [formatPlainDate(value: dealer.createDate)])}</span>
+        <span class="createDate">${message(code: 'dealer.date.of.creation', args: [formatDate(format: 'dd-MM-yyyy HH:mm', date: dealer.dateCreated)])}</span>
         ${dealer.name}
     </h1>
 

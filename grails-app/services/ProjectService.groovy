@@ -9,6 +9,7 @@ import java.text.StringCharacterIterator
 import java.text.CharacterIterator
 import org.hibernate.criterion.Restrictions
 import org.hibernate.criterion.LikeExpression
+import java.text.SimpleDateFormat
 
 class ProjectService {
 
@@ -81,7 +82,8 @@ class ProjectService {
         filter.max = 500
         filter.sort = "id"
         filter.order = "asc"
-        def dtf = DateTimeFormat.forPattern("dd.MM.yyy")
+        def dtf = new SimpleDateFormat("dd.MM.yyyy")
+        def jodaDtf = DateTimeFormat.forPattern("dd.MM.yyy")
         while (true) {
             def objects = findProjects(filter)
             filter.offset += filter.max
@@ -90,17 +92,17 @@ class ProjectService {
                 cellNum = 0
                 row.createCell (cellNum++).setCellValue(project.name ?: "")
                 row.createCell (cellNum++).setCellValue(project.dealer?.name ?: "")
-                row.createCell (cellNum++).setCellValue(dtf.print(project.createDate))
+                row.createCell (cellNum++).setCellValue(dtf.format(project.dateCreated))
                 row.createCell (cellNum++).setCellValue(project.customer ?: "")
                 row.createCell (cellNum++).setCellValue(project.department ?: "")
                 row.createCell (cellNum++).setCellValue(project.city?.name ?: "")
                 row.createCell (cellNum++).setCellValue(project.contactPerson ?: "")
                 row.createCell (cellNum++).setCellValue(project.contactPhone)
-                row.createCell (cellNum++).setCellValue(project.releaseDate ? dtf.print(project.releaseDate): "")
+                row.createCell (cellNum++).setCellValue(project.releaseDate ? jodaDtf.print(project.releaseDate): "")
                 row.createCell (cellNum++).setCellValue(project.sum.toString() ?: "")
 //                row.createCell (cellNum++).setCellValue( message(code: 'project.status.'+project.status))
                 row.createCell (cellNum++).setCellValue(project.comments ?: "")
-                row.createCell (cellNum++).setCellValue(project.closeDate ? dtf.print(project.closeDate): "")
+                row.createCell (cellNum++).setCellValue(project.closeDate ? jodaDtf.print(project.closeDate): "")
             }
             if (!objects) {
                 break;

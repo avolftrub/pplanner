@@ -5,7 +5,7 @@
     </g:if>
     <g:else>
         <h1>
-            <span class="createDate">${message(code: 'project.date.of.creation', args: [formatPlainDate(value: project.createDate)])}</span>
+            <span class="createDate">${message(code: 'project.date.of.creation', args: [formatDate(format: 'dd-MM-yyyy HH:mm', date: project.dateCreated)])}</span>
             <g:message code="project.action.edit.title"/>
         </h1>
     </g:else>

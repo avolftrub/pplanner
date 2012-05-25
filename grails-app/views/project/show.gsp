@@ -56,7 +56,8 @@
 
 <div class="content show">
     <h1>
-        <span class="createDate">${message(code: 'project.date.of.creation', args: [formatPlainDate(value: project.createDate)])}</span>
+        <span class="createDate">${message(code: 'project.date.of.creation', args: [formatDate(format: 'dd-MM-yyyy HH:mm', date: project.dateCreated)])}</span><br/>
+        <span class="createDate">${message(code: 'project.date.of.modification', args: [formatDate(format: 'dd-MM-yyyy HH:mm', date: project.lastUpdated)])}</span>
         ${project.name},&nbsp;<span class="projectStatus st${project.approvalStatus.id}"><g:message
             code="${'project.status.lt.' + project.approvalStatus.id}"/></span>
     </h1>

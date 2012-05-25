@@ -2,7 +2,7 @@ import org.joda.time.LocalDate
 
 class Dealer {
 
-    LocalDate createDate = new LocalDate()
+    Date dateCreated
     String name
 
     static hasMany = [user: User]

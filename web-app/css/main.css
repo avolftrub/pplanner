@@ -831,10 +831,11 @@ input.errors {
 
 span.createDate {
     float: right;
-    font-size: 15px;
+    font-size: 13px;
     position: relative;
     top: 5px;
     color: #525252;
+    display: block;
 }
 
 h1.newEntity {
@@ -1054,6 +1055,10 @@ span.flashMessage table td {
     margin: 0;
     vertical-align: middle;
 
+}
+
+table.projectsTable {
+    font-size: 12px;
 }
 
 
