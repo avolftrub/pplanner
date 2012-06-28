@@ -27,8 +27,10 @@ class DocumentService {
     /** Returns real path to document  */
     def getDocumentFile(Document doc) {
         def path = ConfigurationHolder.config.document.upload.dir
+
         def dir = new File(path)
         dir.mkdirs()
+
         return new File(dir, getDocumentFileName (doc))
     }
 
