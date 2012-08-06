@@ -4,7 +4,7 @@
         <div class="userSection">
             <span class="userData">
                 <g:link controller="settings" action="showSettings" id="${user.id}">${user.name}</g:link>&nbsp;
-                <span>(${message(code: 'ROLE.' + user.role.name)})</span>
+                <span>(${message(code: 'ROLE.' + user.role.name)}<shiro:hasRole name="${ShiroRole.ROLE_DEALER}">,&nbsp;${user.dealer.name}</shiro:hasRole>)</span>
             </span>
         </div>
 

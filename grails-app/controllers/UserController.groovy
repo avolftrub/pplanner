@@ -42,7 +42,9 @@ class UserController {
         user.validate()
 
         if (isPasswordChanged) {
-            if (params.password.trim().length() < 6) {
+            if (params.password.trim().length() == 0) {
+                user.errors.rejectValue('password', 'password.empty')
+            } else if (params.password.trim().length() < 6) {
                 user.errors.rejectValue('password', 'password.too.short')
             } else if (params.password != params.password2) {
                 user.errors.rejectValue('password', 'passwords.mismatch')
@@ -82,17 +84,20 @@ class UserController {
         }
 
         def isPasswordChanged = params.boolean('pwdChange')
+        log.error "TTTTTTT:   $isPasswordChanged"
+
+        user.validate()
 
         if (isPasswordChanged) {
-            if (params.password.trim().length() < 6) {
+            if (params.password.trim().length() == 0) {
+                user.errors.rejectValue('password', 'password.empty')
+            } else if (params.password.trim().length() < 6) {
                 user.errors.rejectValue('password', 'password.too.short')
             } else if (params.password != params.password2) {
                 user.errors.rejectValue('password', 'passwords.mismatch')
                 user.errors.rejectValue('password2', 'passwords.mismatch')
             }
         }
-
-        user.validate()
 
         if (!user.hasErrors()) {
             user.password = new Sha512Hash(params.password).toHex()
@@ -102,13 +107,13 @@ class UserController {
                 //clear password fields
                 user.password = ''
                 user.password2 = ''
-                render(view: '/user/create', model: [user: user, isNew: true, currentUser: userService.getCurrentUser(),admin: params.boolean("admin")])
+                render(view: '/user/create', model: [user: user, isNew: true, pwdChange: isPasswordChanged, currentUser: userService.getCurrentUser(),admin: params.boolean("admin")])
             }
         } else {
             //clear password fields
             user.password = ''
             user.password2 = ''
-            render(view: '/user/create', model: [user: user, isNew: true, currentUser: userService.getCurrentUser(),admin: params.boolean("admin")])
+            render(view: '/user/create', model: [user: user, isNew: true, pwdChange: isPasswordChanged, currentUser: userService.getCurrentUser(),admin: params.boolean("admin")])
         }
     }
 
