@@ -77,14 +77,14 @@ class UserController {
 
         user.properties = params
 
-        if (params.boolean("admin")) {
+        def isAdmin = params.boolean("isAdmin")
+        if (isAdmin) {
             user.role = ShiroRole.findByName(ShiroRole.ROLE_ADMIN)
         } else {
             user.role = ShiroRole.findByName(ShiroRole.ROLE_DEALER)
         }
 
         def isPasswordChanged = params.boolean('pwdChange')
-        log.error "TTTTTTT:   $isPasswordChanged"
 
         user.validate()
 
@@ -107,13 +107,13 @@ class UserController {
                 //clear password fields
                 user.password = ''
                 user.password2 = ''
-                render(view: '/user/create', model: [user: user, isNew: true, pwdChange: isPasswordChanged, currentUser: userService.getCurrentUser(),admin: params.boolean("admin")])
+                render(view: '/user/create', model: [user: user, isNew: true, isAdmin: isAdmin, pwdChange: isPasswordChanged, currentUser: userService.getCurrentUser(),admin: params.boolean("admin")])
             }
         } else {
             //clear password fields
             user.password = ''
             user.password2 = ''
-            render(view: '/user/create', model: [user: user, isNew: true, pwdChange: isPasswordChanged, currentUser: userService.getCurrentUser(),admin: params.boolean("admin")])
+            render(view: '/user/create', model: [user: user, isNew: true, isAdmin: isAdmin, pwdChange: isPasswordChanged, currentUser: userService.getCurrentUser(),admin: params.boolean("admin")])
         }
     }
 
@@ -135,7 +135,7 @@ class UserController {
     }
 
     def create = {
-        [user: new User(), isNew: true, pwdChange: true, currentUser: userService.getCurrentUser(), admin: params.admin]
+        [user: new User(), isNew: true, pwdChange: true, currentUser: userService.getCurrentUser(), isAdmin: params.boolean("admin")]
     }
 
     private def prepareFilter() {

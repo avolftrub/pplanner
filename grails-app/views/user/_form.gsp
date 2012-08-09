@@ -52,6 +52,28 @@
             </td>
         </tr>
 
+        <g:if test="${isNew}">
+            <g:if test="${!isAdmin}">
+                <tr>
+                    <td><g:message code="user.dealer"/></td>
+                    <td>
+                        <g:select name="dealer.id" class="w90 ${hasErrors(bean: user, field: 'dealer', 'errors')}" value="${user.dealer?.name}" optionKey="id" from="${Dealer.list()}"/>
+                        <g:renderFieldErrors bean="${user}" field="dealer"/>
+                    </td>
+                </tr>
+            </g:if>
+        </g:if>
+        <g:else>
+            <g:if test="${user.role.name == ShiroRole.ROLE_DEALER}">
+                <tr>
+                    <td><g:message code="user.dealer"/></td>
+                    <td>
+                        <span>${user?.dealer?.name}</span>
+                    </td>
+                </tr>
+            </g:if>
+        </g:else>
+
         <g:if test="${!pwdChange}">
             <tr>
                 <td colspan="2">

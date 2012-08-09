@@ -40,6 +40,10 @@ html.no-cssgradients {
     width: 45% !important;
 }
 
+.w90 {
+    width: 90% !important;
+}
+
 html * {
 	margin: 0;
 }
