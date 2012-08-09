@@ -41,6 +41,8 @@ class AuthController {
 
             def user = userService.getUserWithCommonLogin(session)
 
+            log.warn "Security controller: User with login: ${user.username} successfully authentificated."
+
             //Redirect to a page depending on user role
             if (targetUri == "/" && user.role == ShiroRole.findByName(ShiroRole.ROLE_ADMIN)) {
                 targetUri = "/user/list"
@@ -54,7 +56,7 @@ class AuthController {
         catch (AuthenticationException ex){
             // Authentication failed, so display the appropriate message
             // on the login page.
-            log.info "Authentication failure for user '${params.username}'."
+            log.warn "Security controller: Authentication failure for user '${params.username}'."
             flash.message = message(code: "login.attempt.failed")
 
             // Keep the username and "remember me" setting so that the
