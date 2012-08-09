@@ -140,7 +140,7 @@ class UserController {
 
     private def prepareFilter() {
         if (!params."sort") {
-            params.sort = "lastName"
+            params.sort = "username"
             params.order = "asc"
 
         }
