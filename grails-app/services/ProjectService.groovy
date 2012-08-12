@@ -94,8 +94,8 @@ class ProjectService {
         }
         //create other rows
         filter.offset = 0
-        filter.max = 500
-        filter.sort = "id"
+        filter.max = 5000
+        filter.sort = "name"
         filter.order = "asc"
         def dtf = new SimpleDateFormat("dd.MM.yyyy")
         def jodaDtf = DateTimeFormat.forPattern("dd.MM.yyy")

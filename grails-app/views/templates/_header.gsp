@@ -1,6 +1,6 @@
 <div class="appHeader" role="banner">
     <a href="http://appliedbiosystems.ru"><img src="${resource(dir: 'images', file: 'logo-applied-biosystems.png')}" alt=""/></a>
-    <shiro:isLoggedIn>
+    <shiro:user>
         <div class="userSection">
             <span class="userData">
                 <g:link controller="settings" action="showSettings" id="${user.id}">${user.name}</g:link>&nbsp;
@@ -11,7 +11,7 @@
         <div class="logout">
             <g:link controller="auth" action="signOut"><img src="${resource(dir: 'images', file: 'sign-out.png')}" alt="${message(code: 'logout')}" title="${message(code: 'logout')}"></g:link>
         </div>
-    </shiro:isLoggedIn>
+    </shiro:user>
 
     <span class="flashMessage" style="display: ${flash.message ? '' : 'none'};">
         <table>

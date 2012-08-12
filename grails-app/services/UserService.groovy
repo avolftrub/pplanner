@@ -20,15 +20,13 @@ public class UserService {
 
     /** Returns user with common uperations upon login */
     User getUserWithCommonLogin(session) {
-        if (SecurityUtils.subject.isAuthenticated()) {
-            def username = SecurityUtils.subject.principals.asList().get(0)
-            def user = (username != null) ? User.findByUsername(username) : null
-            if (user != null) {
-                session.userId = user.id
-            }
-            return user
+        def username = SecurityUtils.subject.principals.asList().get(0)
+        def user = (username != null) ? User.findByUsername(username) : null
+
+        if (user != null) {
+            session.userId = user.id
         }
-        return null
+        return user
     }
 
     /** Finds users with the speicified parameters             */
