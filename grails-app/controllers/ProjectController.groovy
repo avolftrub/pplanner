@@ -125,6 +125,10 @@ class ProjectController {
 
         project.validate()
 
+        if (new LocalDate().toDateTimeAtStartOfDay().compareTo(project.releaseDate.toDateTimeAtStartOfDay()) >= 0) {
+            project.errors.rejectValue('releaseDate', 'releaseDate.before.currentdate')
+        }
+
         if (!project.hasErrors() && project.save()) {
             redirect(controller: 'project', action: 'show')
         } else {
@@ -177,7 +181,9 @@ class ProjectController {
 
         project.approvalStatus = LTProjectStatus.APPROVED
 
-        project.save()
+        if (!project.save()) {
+            flash.message = message(code: "project.action.approve.failed")
+        }
 
         redirect(controller: 'project', action: 'show', id:  project.id)
     }

@@ -45,13 +45,7 @@ class Project {
         sum(min: new BigDecimal(0))
         comments(nullable: true, size: 1..2048)
         city(nullable: true)
-        releaseDate(nullable: true, validator: { val, obj ->
-            if (val) {
-                if (new LocalDate().toDateTimeAtStartOfDay().compareTo(val.toDateTimeAtStartOfDay()) >= 0) {
-                    ['releaseDate.before.currentdate']
-                }
-            }
-        })
+        releaseDate(nullable: true)
         closeDate(nullable: true)
     }
 }
