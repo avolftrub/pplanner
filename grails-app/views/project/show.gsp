@@ -9,27 +9,31 @@
 <body>
 <div class="actionMenu">
     <ul>
+        <span class="listBack"><g:link controller="project" action="backToList"><g:message code="project.action.show.back"/></g:link></span>
         <shiro:hasRole name="${ShiroRole.ROLE_DEALER}">
-            <li>
-                <g:link controller="project" class="delete deleteProjectLink" action="delete" id="${project.id}" helpertext="${message(code: 'project.delete.confirm')}">
-                    <img class="actionIcon" src="${resource(dir: 'images', file: 'delete.png')}"
-                         alt="${message(code: 'project.action.delete')}"/><g:message code="project.action.delete"/>
-                </g:link>
-            </li>
+            <g:if test="${project.dealer == currentUser.dealer}">
+                <li>
+                    <g:link controller="project" class="delete deleteProjectLink" action="delete" id="${project.id}" helpertext="${message(code: 'project.delete.confirm')}" params="${params}">
+                        <img class="actionIcon" src="${resource(dir: 'images', file: 'delete.png')}"
+                             alt="${message(code: 'project.action.delete')}"/><g:message code="project.action.delete"/>
+                    </g:link>
+                </li>
 
-            <li>
-                <g:link controller="project" action="edit" id="${project.id}">
-                    <img class="actionIcon" src="${resource(dir: 'images', file: 'edit.png')}"
-                         alt="${message(code: 'project.action.edit')}"/><g:message code="project.action.edit"/>
-                </g:link>
-            </li>
+                <li>
+                    <g:link controller="project" action="edit" id="${project.id}">
+                        <img class="actionIcon" src="${resource(dir: 'images', file: 'edit.png')}"
+                             alt="${message(code: 'project.action.edit')}"/><g:message code="project.action.edit"/>
+                    </g:link>
+                </li>
 
+            </g:if>
             <li>
                 <g:link controller="project" action="create">
                     <img class="actionIcon" src="${resource(dir: 'images', file: 'add.png')}"
-                         alt="${message(code: 'project.action.add')}"/><g:message code="project.action.add"/>
+                        alt="${message(code: 'project.action.add')}"/><g:message code="project.action.add"/>
                 </g:link>
             </li>
+
         </shiro:hasRole>
 
         <shiro:hasRole name="${ShiroRole.ROLE_ADMIN}">
@@ -56,8 +60,8 @@
 
 <div class="content show">
     <h1>
-        <span class="createDate">${message(code: 'project.date.of.creation', args: [formatDate(format: 'dd-MM-yyyy HH:mm', date: project.dateCreated)])}</span><br/>
-        <span class="createDate">${message(code: 'project.date.of.modification', args: [formatDate(format: 'dd-MM-yyyy HH:mm', date: project.lastUpdated)])}</span>
+        <span class="createDate">${message(code: 'project.date.of.creation', args: [formatDate(format: 'yyyy-MM-dd HH:mm', date: project.dateCreated)])}</span><br/>
+        <span class="createDate">${message(code: 'project.date.of.modification', args: [formatDate(format: 'yyyy-MM-dd HH:mm', date: project.lastUpdated)])}</span>
         ${project.name},&nbsp;<span class="projectStatus st${project.approvalStatus.id}"><g:message
             code="${'project.status.lt.' + project.approvalStatus.id}"/></span>
     </h1>
@@ -145,15 +149,17 @@
                 <g:if test="${project.documents?.size() > 0}">
                     <br/>
                 </g:if>
-                <a href="#" class="addDocumentLink"><img class="" src="${resource(dir: 'images', file: 'plus.gif')}" alt="${message(code: 'project.document.upload.link')}"/><g:message code="project.document.upload.link"/></a>
-                <div class="uploadDocumentForm" style="display: none;">
-                    <g:form method="post" action="uploadDocument" controller="project" enctype="multipart/form-data">
-                        <g:hiddenField name="projectId" value="${project.id}"/>
-                        <g:hiddenField name="name" value="testDoc"/>
-                        <input type="file" name="file" value="Загрузить"/>
-                        <g:submitButton class="uploadDocBtn" name="upload" value="${message(code: 'project.document.upload.button')}"/><a class="cancelUpload" href="#"><g:message code="cancel"/></a>
-                    </g:form>
-                </div>
+                <g:if test="${project.dealer == currentUser.dealer}">
+                    <a href="#" class="addDocumentLink"><img class="" src="${resource(dir: 'images', file: 'plus.gif')}" alt="${message(code: 'project.document.upload.link')}"/><g:message code="project.document.upload.link"/></a>
+                    <div class="uploadDocumentForm" style="display: none;">
+                        <g:form method="post" action="uploadDocument" controller="project" enctype="multipart/form-data">
+                            <g:hiddenField name="projectId" value="${project.id}"/>
+                            <g:hiddenField name="name" value="testDoc"/>
+                            <input type="file" name="file" value="Загрузить"/>
+                            <g:submitButton class="uploadDocBtn" name="upload" value="${message(code: 'project.document.upload.button')}"/><a class="cancelUpload" href="#"><g:message code="cancel"/></a>
+                        </g:form>
+                    </div>
+                </g:if>
             </td>
         </tr>
     </table>

@@ -48,4 +48,8 @@ class Project {
         releaseDate(nullable: true)
         closeDate(nullable: true)
     }
+
+    static mapping = {
+        sort dateCreated: "desc"
+    }
 }

@@ -134,7 +134,7 @@ div.appHeader a {
 }
 
 .content.show, .content.edit {
-    margin-top: 70px;
+    /*margin-top: 70px;*/
 }
 
 
@@ -689,7 +689,7 @@ table td.centered {
 }
 
 div.actionMenu {
-    margin-bottom: 50px;
+    /*margin-bottom: 50px;*/
     margin-top: 15px;
 }
 
@@ -1063,6 +1063,12 @@ span.flashMessage table td {
 
 table.projectsTable {
     font-size: 12px;
+}
+
+span.listBack {
+    background: url("../images/arrow.jpg") no-repeat 4px 1px;
+    padding-left: 22px;
+    margin-left: 17px;
 }
 
 

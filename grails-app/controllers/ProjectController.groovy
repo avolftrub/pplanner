@@ -36,8 +36,9 @@ class ProjectController {
             redirect(controller: 'project', action: 'list')
         }
 
+        def currentUser = userService.getCurrentUser()
         def project = projectService.findProjects(prepareFilter(params))[0]
-        if (!project) {
+        if (!project || (project.dealer != currentUser.dealer)) {
             redirect(controller: 'project', action: 'list')
         }
 
@@ -45,6 +46,11 @@ class ProjectController {
     }
 
     def list = {
+        def user = userService.currentUser
+        user.projectFilter?.delete()
+        user.projectFilter = null
+        user.save()
+
         def filter = prepareFilter(params)
         def results = projectService.findProjects(filter)
 
@@ -56,8 +62,47 @@ class ProjectController {
         [projects: results.list, total: results.totalCount, filter: filter, quickSearchStr: qsStr.toString().trim()]
     }
 
+    def backToList = {
+        def user = userService.getCurrentUser()
+        def prjFilter = user.projectFilter
+        def model = [:]
+        if (prjFilter) {
+            model.max = prjFilter.max?.toString() ?: ""
+            model.offset = prjFilter.offset?.toString() ?: ""
+            model.sort = prjFilter.sort
+            model.order = prjFilter.sortOrder
+            def q = new StringBuffer()
+            prjFilter.quickSearch.each {
+                q.append(it).append(" ")
+            }
+            model.q = q.toString().trim()
+        }
+
+        redirect(controller: "project", action: "lookup", params: model)
+    }
+
+
     def lookup = {
+        def user = userService.currentUser
         def filter = prepareFilter(params)
+        if (filter.quickSearch?.size() > 0) {
+            user.projectFilter?.delete()
+            def prjFilter = new ProjectFilter()
+            prjFilter.max  = filter.max ?: null
+            prjFilter.offset = filter.offset ?: null
+            prjFilter.sort = filter.sort
+            prjFilter.sortOrder = filter.order
+            prjFilter.quickSearch = filter.quickSearch
+            prjFilter.save()
+
+            user.projectFilter = prjFilter
+        } else {
+            user.projectFilter?.delete()
+            user.projectFilter = null
+
+        }
+        user.save()
+
         def results = projectService.findProjects(filter)
 
         def qsStr = new StringBuffer()
@@ -72,16 +117,18 @@ class ProjectController {
         def projectId = params.long("id")
         if (!projectId) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
+        def currentUser = userService.getCurrentUser()
         def project = projectService.findProjects(prepareFilter(params))[0]
-        if (!project) {
+        if (!project || (project.dealer != currentUser.dealer)) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         project.status = ProjectStatus.getById(params.status as Integer)
 
-        def currentUser = userService.getCurrentUser()
         if (currentUser.isAdmin()) {
             project.dealer = Dealer.get(params.dealer)
         } else {
@@ -94,7 +141,10 @@ class ProjectController {
             project.city = City.findByName(params.city?.trim())
         }
 
-        bindData(project, params, [exclude: ['status', 'dealer', 'city']])
+        project.releaseDate = (params.releaseDate?.trim()?.length() > 0) ? LocalDate.parse(params.releaseDate?.trim()) : null
+        project.closeDate = (params.closeDate?.trim()?.length() > 0) ? LocalDate.parse(params.closeDate?.trim()) : null
+
+        bindData(project, params, [exclude: ['status', 'dealer', 'city', 'releaseDate', 'closeDate']])
 
         project.validate()
 
@@ -121,16 +171,19 @@ class ProjectController {
             project.city = City.findByName(params.city?.trim())
         }
 
-        bindData(project, params, [exclude: ['status', 'dealer', 'city']])
+        project.releaseDate = (params.releaseDate?.trim()?.length() > 0) ? LocalDate.parse(params.releaseDate?.trim()) : null
+        project.closeDate = (params.closeDate?.trim()?.length() > 0) ? LocalDate.parse(params.closeDate?.trim()) : null
+
+        bindData(project, params, [exclude: ['status', 'dealer', 'city', 'releaseDate', 'closeDate']])
 
         project.validate()
 
-        if (new LocalDate().toDateTimeAtStartOfDay().compareTo(project.releaseDate.toDateTimeAtStartOfDay()) >= 0) {
+        if (project.releaseDate && new LocalDate().toDateTimeAtStartOfDay().compareTo(project.releaseDate.toDateTimeAtStartOfDay()) >= 0) {
             project.errors.rejectValue('releaseDate', 'releaseDate.before.currentdate')
         }
 
         if (!project.hasErrors() && project.save()) {
-            redirect(controller: 'project', action: 'show')
+            redirect(controller: 'project', action: 'show', id: project.id)
         } else {
             render(view: '/project/create', model: [project: project, isNew: true, currentUser: userService.getCurrentUser()])
         }
@@ -143,7 +196,8 @@ class ProjectController {
         }
 
         def project = projectService.findProjects(prepareFilter(params))[0]
-        if (!project) {
+        def currentUser = userService.getCurrentUser()
+        if (!project || (project.dealer != currentUser.dealer)) {
             redirect(controller: 'project', action: 'list')
         }
 
@@ -172,12 +226,10 @@ class ProjectController {
         def projectId = params.long("id")
         if (!projectId) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         def project = projectService.findProjects(prepareFilter(params))[0]
-        if (!project) {
-            redirect(controller: 'project', action: 'list')
-        }
 
         project.approvalStatus = LTProjectStatus.APPROVED
 
@@ -192,16 +244,16 @@ class ProjectController {
         def projectId = params.long("id")
         if (!projectId) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         def project = projectService.findProjects(prepareFilter(params))[0]
-        if (!project) {
-            redirect(controller: 'project', action: 'list')
-        }
 
         project.approvalStatus = LTProjectStatus.REJECTED
 
-        project.save()
+        if (!project.save()) {
+            flash.message = message(code: "project.action.approve.failed")
+        }
 
         redirect(controller: 'project', action: 'show', id:  project.id)
     }
@@ -210,11 +262,13 @@ class ProjectController {
         def projectId = params.long("projectId")
         if (!projectId) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         def project = projectService.findProjects(prepareFilter(params))[0]
         if (!project) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         def commentInstance = new Comment(params)
@@ -231,22 +285,26 @@ class ProjectController {
         def projectId = params.long("projectId")
         if (!projectId) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         def project = projectService.findProjects(prepareFilter(params))[0]
         if (!project) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         def commentId = params.long("id")
 
         if (!commentId) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         def commentInstance = Comment.get(commentId)
         if (!commentInstance || commentInstance.author != userService.currentUser) {
             redirect(controller: 'project', action: 'list')
+            return
         } else {
             project.removeFromUserComments(commentInstance)
             project.save()
@@ -261,11 +319,16 @@ class ProjectController {
         def projectId = params.long("projectId")
         if (!projectId) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
+        def currentUser = userService.getCurrentUser()
+
         def project = projectService.findProjects(prepareFilter(params))[0]
-        if (!project) {
-            redirect(controller: 'project', action: 'list')
+        if (!currentUser.isAdmin()) {
+            if (!project || (currentUser.dealer && project.dealer != currentUser.dealer)) {
+                redirect(controller: 'project', action: 'list')
+            }
         }
 
         def file = request instanceof MultipartHttpServletRequest ? request.getFile('file') : null
@@ -353,8 +416,8 @@ class ProjectController {
 
     private def prepareFilter(params) {
         if (!params."sort") {
-            params.sort = "name"
-            params.order = "asc"
+            params.sort = "dateCreated"
+            params.order = "desc"
 
         }
 

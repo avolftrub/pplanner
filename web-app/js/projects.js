@@ -3,7 +3,7 @@ $(document).ready(function () {
 //    $( "#datepicker" ).datepicker( $.datepicker.regional[ "ru" ] );                               `
 
     var rd = $("#releaseDate").datepicker({
-        dateFormat: 'dd.mm.yy',
+        dateFormat: 'yy-mm-dd',
         buttonImage: "../images/delete.png",
         changeYear: false,
         numberOfMonths: 1,
@@ -12,7 +12,7 @@ $(document).ready(function () {
     $("#releaseDate").datepicker('setDate', $('#releaseDate').val());
 
     var cd = $("#closeDate").datepicker({
-        dateFormat: 'dd.mm.yy',
+        dateFormat: 'yy-mm-dd',
         buttonImage: "../images/delete.png",
         changeYear: false,
         numberOfMonths: 1,

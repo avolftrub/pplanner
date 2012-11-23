@@ -123,7 +123,7 @@
 
     <g:if test="${filter.max < total}">
         <div class="pagination">
-            <g:paginate total="${total}" />
+            <g:paginate total="${total}" params="${[q: quickSearchStr]}"/>
         </div>
     </g:if>
 </div>

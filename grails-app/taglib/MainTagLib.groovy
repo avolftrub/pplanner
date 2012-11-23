@@ -27,7 +27,7 @@ public class MainTagLib {
         if (!attrs.value) { return }
         def dt = attrs.value instanceof LocalDate ? attrs.value.toDateTimeAtStartOfDay().toDate() : attrs.value.toDate()
         def myLocale = UL.forLocale(RequestContextUtils.getLocale(request))
-        out << new SDF("dd.MM.yyyy", myLocale).format(dt)
+        out << new SDF("yyyy-MM-dd", myLocale).format(dt)
     }
 
     def deleteDialog = { attrs, body ->

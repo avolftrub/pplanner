@@ -26,8 +26,8 @@ class SearchParameters {
 
     /** Binds sorting and pagination parameters from request parameters   */
     def bindLimits(params) {
-        max = params.max
-        offset = params.offset
+        max = params.int("max")
+        offset = params.int("offset")
         sort = params.sort
         order = params.order
         if (params.q) {

@@ -9,6 +9,7 @@ class User {
     String middleName
     String lastName
     ShiroRole role
+    ProjectFilter projectFilter
 
     static belongsTo = [dealer: Dealer]
 
@@ -20,6 +21,7 @@ class User {
         username(nullable: false, blank: false, email: true, unique: true)
         middleName(nullable: true, size: 1..128)
         dealer(nullable: true)
+        projectFilter(nullable: true)
     }
 
     transient def getName() {

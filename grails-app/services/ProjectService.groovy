@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.RequestContextUtils
 import org.codehaus.groovy.grails.web.util.WebUtils
 import org.apache.poi.ss.usermodel.CellStyle
 import org.apache.poi.ss.usermodel.Font
+import ru.appbio.LTProjectStatus
 
 class ProjectService {
 
@@ -28,7 +29,10 @@ class ProjectService {
         Project.createCriteria().list(filter.getLimits()) {
 
             if (filter.dealerId) {
-                eq ("dealer.id", filter.dealerId)
+                or {
+                    eq ("dealer.id", filter.dealerId)
+                    eq ("approvalStatus", LTProjectStatus.APPROVED)
+                }
             }
 
             if (filter.projectId) {

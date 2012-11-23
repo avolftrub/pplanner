@@ -58,8 +58,8 @@ class BootStrap {
 
     def bootstrapShiroRoles() {
         def roles = [
-                'admin' :['user','project:list,show,approve,reject,addComment,deleteComment,downloadDocument,exportToExcel','dealer', 'settings'],
-                'dealer' :['project:list,show,create,save,update,edit,delete,addComment,deleteComment,uploadDocument,downloadDocument,exportToExcel,lookupCity,lookup', 'settings']
+                'admin' :['user','project:list,backToList,show,approve,reject,addComment,deleteComment,downloadDocument,exportToExcel','dealer', 'settings'],
+                'dealer' :['project:list,backToList,show,create,save,update,edit,delete,addComment,deleteComment,uploadDocument,downloadDocument,exportToExcel,lookupCity,lookup', 'settings']
         ]
 
         roles.each { roleName, perms ->
