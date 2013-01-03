@@ -29,10 +29,7 @@ class ProjectService {
         Project.createCriteria().list(filter.getLimits()) {
 
             if (filter.dealerId) {
-                or {
-                    eq ("dealer.id", filter.dealerId)
-                    eq ("approvalStatus", LTProjectStatus.APPROVED)
-                }
+                eq ("dealer.id", filter.dealerId)
             }
 
             if (filter.projectId) {
