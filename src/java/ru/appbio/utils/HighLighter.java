@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Used for highlighting search results.
  */
-public class Highlighter {
+public class HighLighter {
 
     /**
      * Highlight and HTML-encode search result.

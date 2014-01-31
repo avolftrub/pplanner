@@ -28,6 +28,8 @@ class Project {
 
     List documents
 
+    Boolean archived = false
+
     static belongsTo = [dealer: Dealer]
 
     static hasMany = [userComments: Comment, documents: Document]

@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import ru.appbio.SearchParameters
 import ru.appbio.ProjectSearchParameters
 import grails.converters.JSON
-import ru.appbio.utils.Highlighter
+import ru.appbio.utils.HighLighter
 import ru.appbio.LTProjectStatus
 import org.springframework.web.multipart.MultipartHttpServletRequest
 
@@ -20,11 +20,18 @@ class ProjectController {
         def projectId = params.long("id")
         if (!projectId) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
-        def project = projectService.findProjects(prepareFilter(params))[0]
+        def filter =  prepareFilter(params)
+        if (params.boolean("showArchived")) {
+            filter.archived = true
+        }
+
+        def project = projectService.findProjects(filter, true)[0]
         if (!project) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         [project: project, currentUser: userService.getCurrentUser()]
@@ -34,12 +41,14 @@ class ProjectController {
         def projectId = params.long("id")
         if (!projectId) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         def currentUser = userService.getCurrentUser()
         def project = projectService.findProjects(prepareFilter(params))[0]
         if (!project || (project.dealer != currentUser.dealer)) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         [project: project, isNew: false]
@@ -52,14 +61,14 @@ class ProjectController {
         user.save()
 
         def filter = prepareFilter(params)
-        def results = projectService.findProjects(filter)
+        def results = projectService.findProjects(filter, true)
 
         def qsStr = new StringBuffer()
         filter.quickSearch.each {
             qsStr.append(it).append(" ")
         }
 
-        [projects: results.list, total: results.totalCount, filter: filter, quickSearchStr: qsStr.toString().trim()]
+        [projects: results.list, total: results.totalCount, filter: filter, quickSearchStr: qsStr.toString().trim(), currentUser: user]
     }
 
     def backToList = {
@@ -71,11 +80,14 @@ class ProjectController {
             model.offset = prjFilter.offset?.toString() ?: ""
             model.sort = prjFilter.sort
             model.order = prjFilter.sortOrder
+            model.archived = prjFilter.archived
             def q = new StringBuffer()
             prjFilter.quickSearch.each {
                 q.append(it).append(" ")
             }
             model.q = q.toString().trim()
+        } else {
+            model.archived = params.boolean("archived")
         }
 
         redirect(controller: "project", action: "lookup", params: model)
@@ -93,6 +105,7 @@ class ProjectController {
             prjFilter.sort = filter.sort
             prjFilter.sortOrder = filter.order
             prjFilter.quickSearch = filter.quickSearch
+            prjFilter.archived = filter.archived
             prjFilter.save()
 
             user.projectFilter = prjFilter
@@ -103,14 +116,13 @@ class ProjectController {
         }
         user.save()
 
-        def results = projectService.findProjects(filter)
+        def results = projectService.findProjects(filter, true)
 
         def qsStr = new StringBuffer()
         filter.quickSearch.each {
             qsStr.append(it).append(" ")
         }
-
-        render(view: 'list', model: [projects: results.list, total: results.totalCount, filter: filter, quickSearchStr: qsStr.toString().trim()])
+        render(view: params.boolean("archived") ? "listArchived" : 'list', model: [projects: results.list, total: results.totalCount, filter: filter, quickSearchStr: qsStr.toString().trim(), currentUser: user, params: params])
     }
 
     def update = {
@@ -193,12 +205,14 @@ class ProjectController {
         def projectId = params.long("id")
         if (!projectId) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         def project = projectService.findProjects(prepareFilter(params))[0]
         def currentUser = userService.getCurrentUser()
         if (!project || (project.dealer != currentUser.dealer)) {
             redirect(controller: 'project', action: 'list')
+            return
         }
 
         project.delete()
@@ -328,6 +342,7 @@ class ProjectController {
         if (!currentUser.isAdmin()) {
             if (!project || (currentUser.dealer && project.dealer != currentUser.dealer)) {
                 redirect(controller: 'project', action: 'list')
+                return
             }
         }
 
@@ -411,6 +426,68 @@ class ProjectController {
         render(contentType: 'text/json') {
             result.collect {it.name}
         }
+    }
+    def listArchived = {
+        def user = userService.currentUser
+        user.projectFilter?.delete()
+        user.projectFilter = null
+        user.save()
+
+        def filter = prepareFilter(params)
+        filter.archived = true
+        def results = projectService.findProjects(filter, true)
+
+        def qsStr = new StringBuffer()
+        filter.quickSearch.each {
+            qsStr.append(it).append(" ")
+        }
+
+        [projects: results.list, total: results.totalCount, filter: filter, quickSearchStr: qsStr.toString().trim(), currentUser: user]
+
+    }
+
+    def archive = {
+        def archivedIds = params.list("achivedProjectId").collect {it as long}
+        if (!archivedIds || archivedIds.size() == 0) {
+            redirect(controller: 'project', action: 'list')
+            return
+        }
+
+        def projects2archive = Project.findAllByIdInList(archivedIds)
+        def countPrj = 0
+
+        projects2archive.each {
+            it.archived = true
+            if (it.save()) {
+                countPrj++
+            }
+        }
+
+        flash.message = message(code: "project.action.archived.true", args: [countPrj])
+
+        redirect(controller: 'project', action: 'lookup')
+    }
+
+    def unarchive = {
+        def archivedIds = params.list("achivedProjectId").collect {it as long}
+        if (!archivedIds || archivedIds.size() == 0) {
+            redirect(controller: 'project', action: 'list')
+            return
+        }
+
+        def projects2archive = Project.findAllByIdInList(archivedIds)
+        def countPrj = 0
+
+        projects2archive.each {
+            it.archived = false
+            if (it.save()) {
+                countPrj++
+            }
+        }
+
+        flash.message = message(code: "project.action.unarchived.true", args: [countPrj])
+
+        redirect(controller: 'project', action: 'lookup', params: [archived: true])
     }
 
 

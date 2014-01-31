@@ -9,8 +9,20 @@
 <body>
 <div class="actionMenu">
     <ul>
+        <shiro:hasRole name="${ShiroRole.ROLE_ADMIN}">
+            <g:form method="POST" action="archive" name="archiveForm">
+                <li>
+                    <a id="archivePrjsBtn" href="#" style="display: none;">
+                        <img class="actionIcon" src="${resource(dir: 'images', file: 'add2archive.png')}" alt="${message(code: 'project.action.archive')}"/><g:message code="project.action.archive"/>
+                    </a>
+                    <span id="archivePrjsDisableBtn">
+                        <img class="actionIcon" src="${resource(dir: 'images', file: 'add2archive_dis.png')}" alt="${message(code: 'project.action.archive')}"/><g:message code="project.action.archive"/>
+                    </span>
+                </li>
+            </g:form>
+        </shiro:hasRole>
         <li>
-            <g:link controller="project" action="exportToExcel">
+            <g:link controller="project" action="exportToExcel" params="${[q: quickSearchStr, sort: filter.sort, order: filter.order]}">
                 <img class="actionIcon" src="${resource(dir: 'images', file: 'excel.png')}" alt="${message(code: 'project.action.excel')}"/><g:message code="project.action.excel"/>
             </g:link>
         </li>
@@ -41,91 +53,9 @@
 
 %{--</div>--}%
 
-<div id="list-projects" class="content scaffold-list" role="main">
-    <h1><g:message code="project.action.list.title"/></h1>
-    <g:if test="${total > 0}">
-        <table class="projectsTable">
-            <colgroup>
-                <col width="25%"/>
-                <col width="5%"/>
-                <col width="10%"/>
-                <col width="12%"/>
-                <col width="12%"/>
-                <col width="8%"/>
-                <col width="8%"/>
-                <col width="5%"/>
-                <col width="5%"/>
-                <col width="5%"/>
-                <col width="5%"/>
-            </colgroup>
-            <thead>
-            <tr>
-                <g:sortableColumn action="list" params="${params}" property="name" title="${g.message(code:'project.name.short')}" class="${list?'':'disabled'}"/>
-                <g:sortableColumn action="list" params="${params}" property="lastUpdated" title="${g.message(code:'project.updated.short')}" class="${list?'':'disabled'}"/>
-                <g:sortableColumn action="list" params="${params}" property="productName" title="${g.message(code:'project.productName.short')}" class="${list?'':'disabled'}"/>
-                <g:sortableColumn action="list" params="${params}" property="dealer" title="${g.message(code:'project.dealer.short')}" class="${list?'':'disabled'}"/>
-                <g:sortableColumn action="list" params="${params}" property="customer" title="${g.message(code:'project.customer.short')}" class="${list?'':'disabled'}"/>
-                <g:sortableColumn action="list" params="${params}" property="city" title="${g.message(code:'project.city.short')}" class="${list?'':'disabled'}"/>
-                <g:sortableColumn action="list" params="${params}" property="sum" title="${g.message(code:'project.sum.short')}" class="${list?'':'disabled'}"/>
-                <g:sortableColumn action="list" params="${params}" property="status" title="${g.message(code:'project.status')}" class="${list?'':'disabled'}"/>
-                <g:sortableColumn action="list" params="${params}" property="approvalStatus" title="${g.message(code:'project.approvalStatus')}" class="${list?'':'disabled'}"/>
-                <g:sortableColumn action="list" params="${params}" property="releaseDate" title="${g.message(code:'project.releaseDate.short')}" class="${list?'':'disabled'}"/>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <g:each in="${projects}" status="i" var="nextProject">
-                <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                    <td>
-                        <g:link controller="project" action="show" id="${nextProject.id}">
-                            ${nextProject.name}
-                        </g:link>
-                    </td>
-                    <td>${formatDate(format: 'dd-MM-yyyy HH:mm', date: nextProject.lastUpdated)}</td>
-                    <td>${nextProject.productName}</td>
-                    <td>${nextProject.dealer?.name}</td>
-                    <td>
-                        ${nextProject.customer}<br/>
-                        (<g:message code="project.customer.inn.short"/>:&nbsp;${nextProject.inn})
-                    </td>
-                    <td>${nextProject.city?.name}</td>
-                    <td><g:formatMoney value="${nextProject.sum}"/></td>
-                    <td><g:message code="${'project.status.' + nextProject.status.id}"/></td>
-                    <td class="centered">
-                        <img class="actionIcon" width="24" src="${resource(dir: 'images', file: 'lt_status_' + nextProject.approvalStatus.id + '.png')}" alt="${message(code: 'project.status.lt.' + nextProject.approvalStatus.id)}" title="${message(code: 'project.status.lt.' + nextProject.approvalStatus.id)}"/>
-                    </td>
-                    <td>${nextProject.releaseDate}</td>
-                    <td>
-                        <g:link controller="project" action="edit" id="${nextProject.id}">
-                            <img class="actionIcon" src="${resource(dir: 'images', file: 'edit.png')}" alt="${message(code: 'project.action.edit')}"/>
-                        </g:link>
-                    </td>
-                </tr>
-            </g:each>
-            </tbody>
-        </table>
-    </g:if>
+<g:render template="list_inner" model="[projects: projects, currentUser: currentUser, filte: filter, total: total, quickSearchStr: quickSearchStr, archived: false]"/>
 
-    <g:if test="${total == 0}">
-        <table class="notFound">
-            <tr>
-                <td>
-                    <div class="notfoundTitle"><g:message code="list.notFound"/></div>
-                    <div class="NothingFoundActions">
-                        <g:message code="you.can"/><g:link controller="project" action="list"><g:message code="list.clearFilter"/></g:link>
-                        <g:message code="or"/><g:link controller="project" action="create"><g:message code="add.project"/></g:link>
+<g:render template="list_js"/>
 
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </g:if>
-
-    <g:if test="${filter.max < total}">
-        <div class="pagination">
-            <g:paginate total="${total}" params="${[q: quickSearchStr]}"/>
-        </div>
-    </g:if>
-</div>
 </body>
 </html>

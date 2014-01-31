@@ -17,6 +17,8 @@ class ProjectFilter {
     /** Quick search tokens  */
     List<String> quickSearch
 
+    Boolean archived = false
+
     static belongsTo = User
 
     static hasMany = [quickSearch: String]

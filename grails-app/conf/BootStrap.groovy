@@ -64,26 +64,26 @@ class BootStrap {
 
         roles.each { roleName, perms ->
             def role = ShiroRole.findByName(roleName)
-            perms.each { permission ->
-                if (permission.indexOf(':') == -1) {
-                    role.addToPermissions(permission + ':*')
-                } else {
-                    role.addToPermissions(permission)
-                }
-            }
-            role.save(failOnError:true, flush: true)
-
-//            if (!role) {
-//                role = new ShiroRole(name:roleName)
-//                perms.each { permission ->
-//                    if (permission.indexOf(':') == -1) {
-//                        role.addToPermissions(permission + ':*')
-//                    } else {
-//                        role.addToPermissions(permission)
-//                    }
+//            perms.each { permission ->
+//                if (permission.indexOf(':') == -1) {
+//                    role.addToPermissions(permission + ':*')
+//                } else {
+//                    role.addToPermissions(permission)
 //                }
-//                role.save(failOnError:true, flush: true)
 //            }
+//            role.save(failOnError:true, flush: true)
+
+            if (!role) {
+                role = new ShiroRole(name:roleName)
+                perms.each { permission ->
+                    if (permission.indexOf(':') == -1) {
+                        role.addToPermissions(permission + ':*')
+                    } else {
+                        role.addToPermissions(permission)
+                    }
+                }
+                role.save(failOnError:true, flush: true)
+            }
 
         }
     }

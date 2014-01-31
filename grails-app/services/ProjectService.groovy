@@ -1,3 +1,4 @@
+import ru.appbio.ProjectStatus
 import ru.appbio.SearchParameters
 import org.joda.time.format.DateTimeFormat
 import org.apache.poi.ss.usermodel.Workbook
@@ -18,43 +19,89 @@ import ru.appbio.LTProjectStatus
 
 class ProjectService {
 
-    static EXCEL_HEADER = ["Название", "Дата последнего измененеия", "Продукт", "Исполнитель", "Заказчик", "ИНН Заказчика", "Город",
+    static EXCEL_HEADER = ["Уникальный идентификатор", "Название", "Дата создания", "Дата последнего измененеия", "Продукт", "Исполнитель", "Заказчик", "ИНН Заказчика", "Город",
             "Сумма (\$)", "Статус проекта", "Статус LT", "Планируемая дата завершения", "Фактическая дата завершения", "Подразделение", "Контактное лицо",
             "Контактный email", "Контактная информация", "Примечания"]
 
     def messageSource
 
 /** Finds projects with the speicified parameters             */
-    def findProjects(ProjectSearchParameters filter) {
+    def findProjects(ProjectSearchParameters filter, includeCompetitorsProjects = false) {
         Project.createCriteria().list(filter.getLimits()) {
-
-            if (filter.dealerId) {
-                eq ("dealer.id", filter.dealerId)
-            }
-
-            if (filter.projectId) {
-                eq ("id", filter.projectId)
-            }
-
-            if (filter.quickSearch) {
+            or {
                 and {
-                    for (token in filter.quickSearch) {
-                        or {
-                            'ilike'("name", '%' + escape(token, '!' as char) + '%')
-                            'ilike'("productName", '%' + escape(token, '!' as char) + '%')
-                            'ilike'("customer", '%' + escape(token, '!' as char) + '%')
-                            'ilike'("inn", '%' + escape(token, '!' as char) + '%')
-                            join('dealer')
-                            dealer {
-                                'ilike'("name", '%' + escape(token, '!' as char) + '%')
+                    if (filter.dealerId) {
+                        eq ("dealer.id", filter.dealerId)
+                    }
+                    if (filter.projectId) {
+                        eq ("id", filter.projectId)
+                    }
+                    if (filter.archived) {
+                        eq ("archived", true)
+                    } else {
+                        eq ("archived", false)
+                    }
+                    if (filter.quickSearch) {
+                        and {
+                            for (token in filter.quickSearch) {
+                                or {
+                                    sqlRestriction("CAST(this_.id AS char) like '%" + escape(token, '!' as char) + "%'") // id
+                                    'ilike'("name", '%' + escape(token, '!' as char) + '%')                              // название проекта
+                                    'ilike'("productName", '%' + escape(token, '!' as char) + '%')                       // название продукта
+                                    'ilike'("customer", '%' + escape(token, '!' as char) + '%')                          // название заказчика
+                                    'ilike'("customerName", '%' + escape(token, '!' as char) + '%')                      // конечный пользователь
+                                    'ilike'("inn", '%' + escape(token, '!' as char) + '%')                               // инн заказчика
+                                    'ilike'("department", '%' + escape(token, '!' as char) + '%')                        // подразделение
+                                    'ilike'("contactPerson", '%' + escape(token, '!' as char) + '%')                     // контактное лицо
+                                    'ilike'("contactEmail", '%' + escape(token, '!' as char) + '%')                     // контактный email
+                                    'ilike'("contactPhone", '%' + escape(token, '!' as char) + '%')                     // контактная информация
+                                    join('dealer')
+                                    dealer {
+                                        'ilike'("name", '%' + escape(token, '!' as char) + '%')                          // исполнитель (имя дилера)
+                                    }
+                                    join('city')
+                                    city {
+                                        'ilike'("name", '%' + escape(token, '!' as char) + '%')                          // город расположения
+                                    }
+                                }
                             }
-                            join('city')
-                            city {
-                                'ilike'("name", '%' + escape(token, '!' as char) + '%')
+                        }
+
+                    }
+                }
+
+                if (includeCompetitorsProjects) {
+                    and {
+                        ne ("dealer.id", filter.dealerId)
+                        eq ("approvalStatus", LTProjectStatus.APPROVED)
+                        if (filter.projectId) {
+                            eq ("id", filter.projectId)
+                        }
+                        if (filter.archived) {
+                            eq ("archived", true)
+                        } else {
+                            eq ("archived", false)
+                        }
+                        if (filter.quickSearch) {
+                            and {
+                                for (token in filter.quickSearch) {
+                                    or {
+                                        sqlRestriction("CAST(this_.id AS char) like '%" + escape(token, '!' as char) + "%'") // id
+                                        'ilike'("name", '%' + escape(token, '!' as char) + '%')                              // название проекта
+                                        'ilike'("productName", '%' + escape(token, '!' as char) + '%')                       // название продукта
+                                        'ilike'("customer", '%' + escape(token, '!' as char) + '%')                          // название заказчика
+                                        'ilike'("customerName", '%' + escape(token, '!' as char) + '%')                      // конечный пользователь
+                                        join('city')
+                                        city {
+                                            'ilike'("name", '%' + escape(token, '!' as char) + '%')                          // город расположения
+                                        }
+                                    }
+                                }
                             }
 
                         }
                     }
+
                 }
 
             }
@@ -109,7 +156,9 @@ class ProjectService {
                 def status = messageSource.getMessage('project.status.' + project.status.id, null, RequestContextUtils.getLocale(utils.getCurrentRequest()))
                 def status1 = messageSource.getMessage('project.status.lt.' + project.approvalStatus.id, null, RequestContextUtils.getLocale(utils.getCurrentRequest()))
 
+                row.createCell (cellNum++).setCellValue(project.id ?: "")
                 row.createCell (cellNum++).setCellValue(project.name ?: "")
+                row.createCell (cellNum++).setCellValue(dtf.format(project.dateCreated))
                 row.createCell (cellNum++).setCellValue(dtf.format(project.lastUpdated))
                 row.createCell (cellNum++).setCellValue(project.productName ?: "")
                 row.createCell (cellNum++).setCellValue(project.dealer?.name ?: "")
