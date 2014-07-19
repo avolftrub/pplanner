@@ -91,6 +91,7 @@ class ProjectService {
                                         'ilike'("productName", '%' + escape(token, '!' as char) + '%')                       // название продукта
                                         'ilike'("customer", '%' + escape(token, '!' as char) + '%')                          // название заказчика
                                         'ilike'("customerName", '%' + escape(token, '!' as char) + '%')                      // конечный пользователь
+                                        'ilike'("inn", '%' + escape(token, '!' as char) + '%')                               // инн заказчика
                                         join('city')
                                         city {
                                             'ilike'("name", '%' + escape(token, '!' as char) + '%')                          // город расположения

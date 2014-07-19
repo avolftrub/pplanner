@@ -27,13 +27,12 @@
                     <g:message code="section.projects"/>
                 </g:link>
             </li>
-            <shiro:hasRole name="${ShiroRole.ROLE_ADMIN}">
-                <li><g:link controller="project" action="listArchived">
+            <li>
+                <g:link controller="project" action="listArchived">
                     <img class="menuIcon" src="${resource(dir: 'images', file: 'archive.png')}" alt="${g.message(code: 'section.archieved')}"/>
                     <g:message code="section.archieved"/>
-            </g:link>
-
-            </shiro:hasRole>
+                </g:link>
+            </li>
         </shiro:user>
     </ul>
 </div>

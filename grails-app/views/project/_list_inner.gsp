@@ -60,9 +60,7 @@
                     <td>${nextProject.dealer?.name}</td>
                     <td>
                         ${nextProject.customer}
-                        <g:if test="${currentUser?.dealer == nextProject.dealer || currentUser.isAdmin()}">
                             <br/>(<g:message code="project.customer.inn.short"/>:&nbsp;${nextProject.inn})
-                        </g:if>
                     </td>
                     <td>${nextProject.city?.name}</td>
                     <td>

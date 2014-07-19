@@ -24,6 +24,10 @@
         <td>${project.customerName}</td>
     </tr>
     <tr>
+        <td><g:message code="project.customer.inn"/></td>
+        <td>${project.inn}</td>
+    </tr>
+    <tr>
         <td><g:message code="project.city"/></td>
         <td>${project.city?.name}</td>
     </tr>
