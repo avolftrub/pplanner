@@ -29,23 +29,23 @@
             </g:if>
         </shiro:hasRole>
 
-        <shiro:hasRole name="${ShiroRole.ROLE_ADMIN}">
-            <g:if test="${project.approvalStatus == ru.appbio.LTProjectStatus.NEW}">
-                <li>
-                    <g:link controller="project" action="reject" id="${project.id}">
-                        <img class="actionIcon" src="${resource(dir: 'images', file: 'reject.png')}"
-                             alt="${message(code: 'project.reject')}"/><g:message code="project.reject"/>
-                    </g:link>
-                </li>
+        %{--<shiro:hasRole name="${ShiroRole.ROLE_ADMIN}">--}%
+            %{--<g:if test="${project.approvalStatus == ru.appbio.LTProjectStatus.NEW}">--}%
+                %{--<li>--}%
+                    %{--<g:link controller="project" action="reject" id="${project.id}">--}%
+                        %{--<img class="actionIcon" src="${resource(dir: 'images', file: 'reject.png')}"--}%
+                             %{--alt="${message(code: 'project.reject')}"/><g:message code="project.reject"/>--}%
+                    %{--</g:link>--}%
+                %{--</li>--}%
 
-                <li>
-                    <g:link controller="project" action="approve" id="${project.id}">
-                        <img class="actionIcon" src="${resource(dir: 'images', file: 'approve.png')}"
-                             alt="${message(code: 'project.approve')}"/><g:message code="project.approve"/>
-                    </g:link>
-                </li>
-            </g:if>
-        </shiro:hasRole>
+                %{--<li>--}%
+                    %{--<g:link controller="project" action="approve" id="${project.id}">--}%
+                        %{--<img class="actionIcon" src="${resource(dir: 'images', file: 'approve.png')}"--}%
+                             %{--alt="${message(code: 'project.approve')}"/><g:message code="project.approve"/>--}%
+                    %{--</g:link>--}%
+                %{--</li>--}%
+            %{--</g:if>--}%
+        %{--</shiro:hasRole>--}%
 
     </ul>
 
@@ -54,8 +54,9 @@
     <h1>
         <span class="createDate">${message(code: 'project.date.of.creation', args: [formatDate(format: 'yyyy-MM-dd HH:mm', date: project.dateCreated)])}</span><br/>
         <span class="createDate">${message(code: 'project.date.of.modification', args: [formatDate(format: 'yyyy-MM-dd HH:mm', date: project.lastUpdated)])}</span>
-        ${project.name},&nbsp;<span class="projectStatus st${project.approvalStatus.id}"><g:message
-            code="${'project.status.lt.' + project.approvalStatus.id}"/></span>
+        ${project.name}
+        %{--,&nbsp;<span class="projectStatus st${project.approvalStatus.id}"><g:message--}%
+            %{--code="${'project.status.lt.' + project.approvalStatus.id}"/></span>--}%
     </h1>
 
     <g:if test="${project.dealer == currentUser.dealer || currentUser.isAdmin()}">

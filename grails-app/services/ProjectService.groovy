@@ -20,7 +20,7 @@ import ru.appbio.LTProjectStatus
 class ProjectService {
 
     static EXCEL_HEADER = ["Уникальный идентификатор", "Название", "Дата создания", "Дата последнего измененеия", "Продукт", "Исполнитель", "Заказчик", "ИНН Заказчика", "Город",
-            "Сумма (\$)", "Статус проекта", "Статус LT", "Планируемая дата завершения", "Фактическая дата завершения", "Подразделение", "Контактное лицо",
+            "Сумма (\$)", "Статус проекта", /*"Статус LT",*/ "Планируемая дата завершения", "Фактическая дата завершения", "Подразделение", "Контактное лицо",
             "Контактный email", "Контактная информация", "Примечания"]
 
     def messageSource
@@ -73,7 +73,7 @@ class ProjectService {
                 if (includeCompetitorsProjects) {
                     and {
                         ne ("dealer.id", filter.dealerId)
-                        eq ("approvalStatus", LTProjectStatus.APPROVED)
+//                        eq ("approvalStatus", LTProjectStatus.APPROVED)
                         if (filter.projectId) {
                             eq ("id", filter.projectId)
                         }
@@ -155,7 +155,7 @@ class ProjectService {
                 def row = sheet.createRow(rowNum++)
                 cellNum = 0
                 def status = messageSource.getMessage('project.status.' + project.status.id, null, RequestContextUtils.getLocale(utils.getCurrentRequest()))
-                def status1 = messageSource.getMessage('project.status.lt.' + project.approvalStatus.id, null, RequestContextUtils.getLocale(utils.getCurrentRequest()))
+//                def status1 = messageSource.getMessage('project.status.lt.' + project.approvalStatus.id, null, RequestContextUtils.getLocale(utils.getCurrentRequest()))
 
                 row.createCell (cellNum++).setCellValue(project.id ?: "")
                 row.createCell (cellNum++).setCellValue(project.name ?: "")
@@ -168,7 +168,7 @@ class ProjectService {
                 row.createCell (cellNum++).setCellValue(project.city?.name ?: "")
                 row.createCell (cellNum++).setCellValue(project.sum.toString() ?: "")
                 row.createCell (cellNum++).setCellValue(status ?: "")
-                row.createCell (cellNum++).setCellValue(status1 ?: "")
+//                row.createCell (cellNum++).setCellValue(status1 ?: "")
                 row.createCell (cellNum++).setCellValue(project.releaseDate ? jodaDtf.print(project.releaseDate): "")
                 row.createCell (cellNum++).setCellValue(project.closeDate ? jodaDtf.print(project.closeDate): "")
                 row.createCell (cellNum++).setCellValue(project.department ?: "")

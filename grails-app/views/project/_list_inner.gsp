@@ -34,7 +34,7 @@
                 <g:sortableColumn action="${sortActionName}" params="${params}" property="city" title="${g.message(code:'project.city.short')}" class="${list?'':'disabled'}"/>
                 <g:sortableColumn action="${sortActionName}" params="${params}" property="sum" title="${g.message(code:'project.sum.short')}" class="${list?'':'disabled'}"/>
                 <g:sortableColumn action="${sortActionName}" params="${params}" property="status" title="${g.message(code:'project.status')}" class="${list?'':'disabled'}"/>
-                <g:sortableColumn action="${sortActionName}" params="${params}" property="approvalStatus" title="${g.message(code:'project.approvalStatus')}" class="${list?'':'disabled'}"/>
+                %{--<g:sortableColumn action="${sortActionName}" params="${params}" property="approvalStatus" title="${g.message(code:'project.approvalStatus')}" class="${list?'':'disabled'}"/>--}%
                 <g:sortableColumn action="${sortActionName}" params="${params}" property="releaseDate" title="${g.message(code:'project.releaseDate.short')}" class="${list?'':'disabled'}"/>
                 <th></th>
             </tr>
@@ -74,9 +74,9 @@
                             &mdash;
                         </g:else>
                     </td>
-                    <td class="centered">
-                        <img class="actionIcon" width="24" src="${resource(dir: 'images', file: 'lt_status_' + nextProject.approvalStatus.id + '.png')}" alt="${message(code: 'project.status.lt.' + nextProject.approvalStatus.id)}" title="${message(code: 'project.status.lt.' + nextProject.approvalStatus.id)}"/>
-                    </td>
+                    %{--<td class="centered">--}%
+                        %{--<img class="actionIcon" width="24" src="${resource(dir: 'images', file: 'lt_status_' + nextProject.approvalStatus.id + '.png')}" alt="${message(code: 'project.status.lt.' + nextProject.approvalStatus.id)}" title="${message(code: 'project.status.lt.' + nextProject.approvalStatus.id)}"/>--}%
+                    %{--</td>--}%
                     <td>
                         ${currentUser?.dealer == nextProject.dealer || currentUser.isAdmin() ? nextProject.releaseDate : '&mdash;'}
                     </td>
